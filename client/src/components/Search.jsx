@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "../styles/search.css";
+import "../styles/Search.css";
 import Mag from "../assets/magnifying-glass.png";
 import X from "../assets/x.png";
 
@@ -42,7 +42,7 @@ export default function Search(props) {
     }
 
     return (
-        <section className="search-form-container">
+        <div className="search-form-container  main-content-element">
             <form onSubmit={handleSubmit} className="search-form">
                 <input
                     type="text"
@@ -66,7 +66,7 @@ export default function Search(props) {
                 {searchResults.length} {searchResults.length === 1 ? "result" : "results"}
             </span>
 
-        </section>
+        </div>
 
     );
 }

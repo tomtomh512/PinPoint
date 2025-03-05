@@ -1,0 +1,22 @@
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    width: 80px;
+}
+
+.navbar-link {
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.25s;
+}
+
+.navbar-link:hover {
+    background-color: #7eafca;
+}
+
+.navbar-link > img {
+    width: 30px;
+    aspect-ratio: 1;
+}

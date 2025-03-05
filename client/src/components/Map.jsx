@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import 'leaflet/dist/leaflet.css';
-import "../styles/map.css";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import "../styles/Map.css";
+import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from 'react-leaflet';
 import { Icon } from 'leaflet';
 
 export default function Map(props) {
@@ -26,7 +26,8 @@ export default function Map(props) {
 
     return (
         <div className="map-container">
-            <MapContainer center={[currentLocation.lat, currentLocation.long]} zoom={12}>
+            <MapContainer center={[currentLocation.lat, currentLocation.long]} zoom={12} zoomControl={false}>
+                <ZoomControl position="bottomright" />
                 <ChangeView center={[currentLocation.lat, currentLocation.long]} />
                 <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"/>
 
