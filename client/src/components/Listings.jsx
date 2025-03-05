@@ -10,7 +10,7 @@ export default function Listings(props) {
                 <div
                     key={listing.id + "-listing"}
                     className="listing-card"
-                    onClick={() => setActiveMarker(listing.id)}
+                    onClick={() => setActiveMarker(listing)}
                 >
                     <h3>{listing.name}</h3>
                     <p>{listing.address}</p>

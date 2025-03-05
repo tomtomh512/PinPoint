@@ -41,7 +41,7 @@ export default function App() {
         }
     }, []);
 
-    const [activeMarker, setActiveMarker] = useState("");
+    const [activeMarker, setActiveMarker] = useState({});
 
     return (
         <main className="main-container">
