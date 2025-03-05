@@ -1,11 +1,12 @@
 .search-form-container {
+
 }
 
 .search-form {
     font-size: 1.5rem;
     display: flex;
     background-color: white;
-    border-radius: 4px;
+    border-radius: 10px;
     border: 2px solid rgba(0, 0, 0, 0.3);
     text-align: left;
     margin: 10px 5px 5px;

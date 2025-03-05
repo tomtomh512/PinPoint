@@ -6,7 +6,7 @@
     padding: 10px;
     border: 1px solid lightgray;
     border-radius: 10px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     transition: 0.25s;
 }
 
@@ -17,4 +17,24 @@
 .listings-container > div > h3 {
     margin: 5px auto;
     font-size: 1.5rem;
+}
+
+.button-container {
+    display: block;
+    text-align: right;
+}
+
+.button-container > button {
+    all: unset;
+    border-radius: 25px;
+    border: 1px solid black;
+    margin: 10px 5px 5px;
+    padding: 5px 10px;
+    transition: 0.25s;
+}
+
+.button-container > button:hover {
+    color: white;
+    background-color: black;
+    cursor: pointer;
 }

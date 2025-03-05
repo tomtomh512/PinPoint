@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function Saved() {
+export default function Planned() {
 
     return (
         <div className="saved-container main-content-element">
-            <h1> Saved </h1>
+            <h1> Planned </h1>
         </div>
     );
 }

@@ -5,7 +5,7 @@ import X from "../assets/exitIcon.png";
 import Listings from "./Listings";
 
 export default function Search(props) {
-    const { onCurrentMarkersChange, currentLocation } = props;
+    const { setCurrentMarkers, currentLocation, setActiveMarker } = props;
 
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -22,7 +22,7 @@ export default function Search(props) {
         fetch(`/search?${queryParams}`)
             .then(res => res.json())
             .then(output => {
-                onCurrentMarkersChange(output.results);
+                setCurrentMarkers(output.results);
                 setSearchResults(output.results);
             })
     }
@@ -64,15 +64,15 @@ export default function Search(props) {
                 </button>
             </form>
 
-            {searchResults.length !== 0 &&
-                <span>
-                    {searchResults.length} {searchResults.length === 1 ? "result" : "results"}
-                </span>
+            {searchResults.length === 0 ?
+                <h3 className="no-results-message"> Nothing to display </h3>
+                :
+                <>
+                    <span> {searchResults.length} {searchResults.length === 1 ? "result" : "results"} </span>
+                    <Listings listings={searchResults} setActiveMarker={setActiveMarker} />
+                </>
             }
 
-            <Listings listings={searchResults} />
-
         </div>
-
     );
 }

@@ -28,8 +28,8 @@ export default function Navbar(props) {
                 <img src={HeartIcon} alt="Favorites"/>
             </Link>
 
-            <Link to="/saved" className="navbar-link" onClick={togglePanelTrue}>
-                <img src={SavedIcon} alt="Saved"/>
+            <Link to="/planned" className="navbar-link" onClick={togglePanelTrue}>
+                <img src={SavedIcon} alt="Planned"/>
             </Link>
 
         </div>

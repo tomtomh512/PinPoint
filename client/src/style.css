@@ -33,3 +33,8 @@ body {
     font-size: 3rem;
     margin: 15px;
 }
+
+.no-results-message {
+    text-align: center;
+    font-size: 1.5rem;
+}

@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
 import Search from "./components/Search";
 import Favorites from "./components/Favorites";
-import Saved from "./components/Saved";
+import Planned from "./components/Planned";
 import Map from "./components/Map";
 import "./style.css";
 
@@ -41,6 +41,8 @@ export default function App() {
         }
     }, []);
 
+    const [activeMarker, setActiveMarker] = useState("");
+
     return (
         <main className="main-container">
             <Navbar togglePanel={togglePanel} togglePanelTrue={togglePanelTrue} />
@@ -48,21 +50,22 @@ export default function App() {
             <Map
                 markers={currentMarkers}
                 currentLocation={currentLocation}
-                onViewChange={setCurrentLocation} // Pass function to update location
+                onViewChange={setCurrentLocation}
+                activeMarker={activeMarker}
             />
-
 
             {showPanel &&
                 <Routes>
                     <Route path="/" element={
                         <Search
-                            onCurrentMarkersChange={setCurrentMarkers}
+                            setCurrentMarkers={setCurrentMarkers}
                             currentLocation={currentLocation}
+                            setActiveMarker={setActiveMarker}
                         />
-                    } />
+                    }/>
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/favorites" element={<Favorites />} />
-                    <Route path="/saved" element={<Saved />} />
+                    <Route path="/planned" element={<Planned />} />
                 </Routes>
             }
         </main>
