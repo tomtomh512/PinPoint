@@ -21,6 +21,7 @@ export default function Listings(props) {
                         {listing.categories.map((category, index) => (
                             <span key={category.id} className="category">
                                 {category.name}
+                                {/* Puts dot between each category */}
                                 {index < listing.categories.length - 1 && " • "}
                             </span>
                         ))}

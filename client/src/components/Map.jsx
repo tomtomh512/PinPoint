@@ -8,7 +8,6 @@ export default function Map(props) {
     const { markers, currentLocation, onViewChange, activeMarker } = props;
 
     const iconSize = 38;
-
     const customIcon = new Icon({
         iconUrl: require("../assets/pin4.png"),
         iconSize: [iconSize, iconSize]

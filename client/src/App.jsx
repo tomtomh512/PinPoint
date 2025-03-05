@@ -9,16 +9,11 @@ import Map from "./components/Map";
 import "./style.css";
 
 export default function App() {
-    const [showPanel, setShowPanel] = useState(true);
-    const togglePanel = () => {
-        setShowPanel(prev => !prev);
-    }
-
-    const togglePanelTrue = () => {
-        setShowPanel(true);
-    }
-
+    // Current markers on map
     const [currentMarkers, setCurrentMarkers] = useState([]);
+    // Highlighted marker on map
+    const [activeMarker, setActiveMarker] = useState({});
+    // Current coordinates of map view
     const [currentLocation, setCurrentLocation] = useState({
         "lat": 40.730610,
         "long": -73.935242,
@@ -41,7 +36,9 @@ export default function App() {
         }
     }, []);
 
-    const [activeMarker, setActiveMarker] = useState({});
+    const [showPanel, setShowPanel] = useState(true);
+    const togglePanel = () => { setShowPanel(prev => !prev) }
+    const togglePanelTrue = () => { setShowPanel(true) }
 
     return (
         <main className="main-container">

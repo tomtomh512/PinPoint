@@ -15,7 +15,7 @@
 .search-form > input {
     all: unset;
     padding: 10px;
-    /*Container width - (image width - padding - padding) * 2 */
+    /* Container width - (image width - padding - padding) * 2 */
     width: calc(100% - (20px - 10px - 10px) * 2);
 }
 

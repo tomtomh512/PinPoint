@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "../styles/Search.css";
-import Mag from "../assets/searchIcon.png";
-import X from "../assets/exitIcon.png";
+import SearchIcon from "../assets/searchIcon.png";
+import ExitIcon from "../assets/exitIcon.png";
 import Listings from "./Listings";
 
 export default function Search(props) {
@@ -10,6 +10,7 @@ export default function Search(props) {
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
+    // Calls API, takes coordinates and search query
     function handleSubmit(event) {
         event.preventDefault();
 
@@ -27,14 +28,17 @@ export default function Search(props) {
             })
     }
 
+    // Warning if not included
     function handleSearchChange(event) {
         setSearchInput(event.target.value);
     }
 
+    // Clears the search input
     function handleClear() {
-        setSearchInput(""); // Clear the search input
+        setSearchInput("");
     }
 
+    // Lets 'Enter' act as submit button
     function handleKeyDown(event) {
         if (event.key === "Enter") {
             event.preventDefault();
@@ -56,15 +60,16 @@ export default function Search(props) {
                 />
 
                 <button onClick={handleClear}>
-                    <img src={X} alt="X"/>
+                    <img src={ExitIcon} alt="X"/>
                 </button>
 
                 <button type="submit">
-                    <img src={Mag} alt="Search"/>
+                    <img src={SearchIcon} alt="Search"/>
                 </button>
             </form>
 
             {searchResults.length === 0 ?
+                // If no results, display message, else show num results and render listings
                 <h3 className="no-results-message"> Nothing to display </h3>
                 :
                 <>
