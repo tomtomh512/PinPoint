@@ -11,15 +11,19 @@ url = "https://discover.search.hereapi.com/v1/discover"
 
 
 # Takes a query search and results limit
-def searchInput(querySearch, limit):
+def searchInput(querySearch, lat, long, limit):
+
     params = {
-        'at': '40.730610,-73.93524',
+        'at': lat + "," + long,
         'limit': limit,
         'q': querySearch,
         'apiKey': API_KEY
     }
 
-    nyc_counties = {"New York", "Kings", "Queens", "Bronx", "Richmond"}
+    # Print the full GET URL
+    # request = requests.Request('GET', url, params=params)
+    # prepared = request.prepare()
+    # print("GET URL:", prepared.url)
 
     response = requests.get(url, params=params)
 
@@ -35,19 +39,16 @@ def searchInput(querySearch, limit):
             name = listing["title"]
             id = listing["id"]
             address = listing["address"]["label"]
-            county = listing["address"]["county"]
             lat = listing["position"]["lat"]
             long = listing["position"]["lng"]
 
-            # If the listing's county is not in NYC
-            if county in nyc_counties:
-                results.append({
-                    "name": name,
-                    "id": id,
-                    "address": address,
-                    "lat": lat,
-                    "long": long
-                })
+            results.append({
+                "name": name,
+                "id": id,
+                "address": address,
+                "lat": lat,
+                "long": long
+            })
 
         return results
 

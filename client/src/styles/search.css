@@ -1,9 +1,12 @@
-.search-form {
+.search-form-container {
     position: absolute;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
+}
+
+.search-form {
     font-size: 28px;
     display: flex;
     background-color: white;
@@ -30,8 +33,17 @@
     background-color: #0000004C;
 }
 
+.search-form-container > span {
+    font-size: 18px;
+    margin-left: 10px;
+}
+
 @media (max-width: 768px) {
     .search-form {
         font-size: 18px;
+    }
+
+    .search-form-container > span {
+        font-size: 14px;
     }
 }

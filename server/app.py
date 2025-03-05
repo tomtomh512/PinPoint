@@ -7,8 +7,10 @@ app = Flask(__name__)
 @app.route('/search', methods=['GET'])
 def search():
     searchQuery = request.args.get('search')
-    searchResults = searchInput(searchQuery, 100)
+    lat = request.args.get('lat')
+    long = request.args.get('long')
 
+    searchResults = searchInput(searchQuery, lat, long, 50)
     return jsonify({"results": searchResults})
 
 
