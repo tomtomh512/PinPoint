@@ -5,20 +5,29 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from 'rea
 import { Icon } from 'leaflet';
 
 export default function Map(props) {
-    const { markers, currentLocation } = props;
+    const { markers, currentLocation, onViewChange } = props;
 
     const customIcon = new Icon({
         iconUrl: require("../assets/pin.png"),
         iconSize: [38, 38]
     });
 
-    // Component to update map view
     function ChangeView({ center }) {
         const map = useMap();
 
         useEffect(() => {
             map.setView(center, map.getZoom());
 
+            // Listen for map movement and update the center
+            const handleMoveEnd = () => {
+                const newCenter = map.getCenter();
+                onViewChange({ lat: newCenter.lat, long: newCenter.lng });
+            };
+
+            map.on("moveend", handleMoveEnd);
+            return () => {
+                map.off("moveend", handleMoveEnd);
+            };
         }, [center, map]);
 
         return null;

@@ -12,7 +12,11 @@ export default function App() {
     const [showPanel, setShowPanel] = useState(true);
     const togglePanel = () => {
         setShowPanel(prev => !prev);
-    };
+    }
+
+    const togglePanelTrue = () => {
+        setShowPanel(true);
+    }
 
     const [currentMarkers, setCurrentMarkers] = useState([]);
     const [currentLocation, setCurrentLocation] = useState({
@@ -39,12 +43,14 @@ export default function App() {
 
     return (
         <main className="main-container">
-            <Navbar togglePanel={togglePanel} />
+            <Navbar togglePanel={togglePanel} togglePanelTrue={togglePanelTrue} />
 
             <Map
                 markers={currentMarkers}
                 currentLocation={currentLocation}
+                onViewChange={setCurrentLocation} // Pass function to update location
             />
+
 
             {showPanel &&
                 <Routes>

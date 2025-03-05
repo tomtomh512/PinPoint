@@ -1,9 +1,12 @@
 .sidebar-container {
     display: flex;
     flex-direction: column;
-    background-color: lightgray;
+    background-color: #ffffff;
     width: 80px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
+
 
 .navbar-link {
     margin: 10px auto;
@@ -13,7 +16,7 @@
 }
 
 .navbar-link:hover {
-    background-color: #7eafca;
+    background-color: lightgray;
 }
 
 .navbar-link > img {
