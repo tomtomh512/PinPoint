@@ -4,15 +4,3 @@
     width: calc(100vw - 80px);
     z-index: 0;
 }
-
-.cluster-icon {
-    height: 50px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background-color: white;
-    transform: translate(-25%, -25%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14pt;
-}

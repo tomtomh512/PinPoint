@@ -54,7 +54,12 @@ export default function App() {
 
             {showPanel &&
                 <Routes>
-                    <Route path="/" element={<Search />} />
+                    <Route path="/" element={
+                        <Search
+                            onCurrentMarkersChange={setCurrentMarkers}
+                            currentLocation={currentLocation}
+                        />
+                    } />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/favorites" element={<Favorites />} />
                     <Route path="/saved" element={<Saved />} />

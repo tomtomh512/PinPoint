@@ -1,7 +1,22 @@
 from flask import Flask, request, jsonify
 from search import searchInput
+import requests
 
 app = Flask(__name__)
+
+
+@app.route('/getLocation', methods=['GET'])
+def get_location():
+    ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    response = requests.get(f'http://ipinfo.io/{ip}/json')
+    data = response.json()
+
+    lat_long = data.get("loc")
+    if lat_long:
+        lat, long = lat_long.split(",")
+        return jsonify({"lat": lat, "long": long})
+
+    return jsonify({"error": "Location not found"}), 404
 
 
 @app.route('/search', methods=['GET'])
