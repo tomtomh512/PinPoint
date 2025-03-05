@@ -1,0 +1,19 @@
+.leaflet-container {
+    height: 100vh;
+    /*position: absolute; !* Position the map absolutely *!*/
+    /*top: 0;*/
+    /*left: 0;*/
+    z-index: 0; /* Keep it behind other elements */
+}
+
+.cluster-icon {
+    height: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: white;
+    transform: translate(-25%, -25%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14pt;
+}
