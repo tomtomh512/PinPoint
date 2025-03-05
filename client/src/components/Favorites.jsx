@@ -4,7 +4,7 @@ export default function Favorites() {
 
     return (
         <div className="favorites-container main-content-element">
-            Favorites
+            <h1> Favorites </h1>
         </div>
     );
 }

@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "../styles/Search.css";
 import Mag from "../assets/searchIcon.png";
 import X from "../assets/exitIcon.png";
+import Listings from "./Listings";
 
 export default function Search(props) {
     const { onCurrentMarkersChange, currentLocation } = props;
@@ -43,6 +44,7 @@ export default function Search(props) {
 
     return (
         <div className="search-form-container  main-content-element">
+            <h1> Search </h1>
             <form onSubmit={handleSubmit} className="search-form">
                 <input
                     type="text"
@@ -62,10 +64,14 @@ export default function Search(props) {
                 </button>
             </form>
 
-            <span>
-                {searchResults.length} {searchResults.length === 1 ? "result" : "results"}
-            </span>
+            {searchResults.length !== 0 &&
+                <span>
+                    {searchResults.length} {searchResults.length === 1 ? "result" : "results"}
+                </span>
+            }
 
+
+            <Listings listings={searchResults} />
         </div>
 
     );

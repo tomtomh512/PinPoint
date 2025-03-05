@@ -1,0 +1,19 @@
+.listings-container {
+}
+
+.listings-container > div {
+    margin: 10px 5px;
+    padding: 5px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: 0.25s;
+}
+
+.listings-container > div:hover {
+    background-color: lightgray;
+}
+
+.listings-container > div > h3 {
+    margin: 5px auto;
+}

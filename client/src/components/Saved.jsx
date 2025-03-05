@@ -4,7 +4,7 @@ export default function Saved() {
 
     return (
         <div className="saved-container main-content-element">
-            Saved
+            <h1> Saved </h1>
         </div>
     );
 }

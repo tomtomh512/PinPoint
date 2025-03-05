@@ -4,7 +4,7 @@ export default function Profile() {
 
     return (
         <div className="profile-container main-content-element">
-            Profile
+            <h1> Profile </h1>
         </div>
     );
 }
