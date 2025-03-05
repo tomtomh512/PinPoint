@@ -7,14 +7,16 @@ import { Icon } from 'leaflet';
 export default function Map(props) {
     const { markers, currentLocation, onViewChange, activeMarker } = props;
 
+    const iconSize = 38;
+
     const customIcon = new Icon({
-        iconUrl: require("../assets/pin.png"),
-        iconSize: [38, 38]
+        iconUrl: require("../assets/pin4.png"),
+        iconSize: [iconSize, iconSize]
     });
 
     const customHighlightedIcon = new Icon({
-        iconUrl: require("../assets/highlightedPin.png"),
-        iconSize: [38, 38]
+        iconUrl: require("../assets/pin5.png"),
+        iconSize: [iconSize, iconSize]
     });
 
     function ChangeView({ center }) {
@@ -50,7 +52,7 @@ export default function Map(props) {
                         position={[marker.lat, marker.long]}
                         icon={marker.id === activeMarker ? customHighlightedIcon : customIcon}
                         key={marker.id + "-marker"}
-                        zIndexOffset={marker.id === activeMarker ? 10 : 0} // Set active marker in front of others
+                        zIndexOffset={marker.id === activeMarker ? 1000 : 0} // Set active marker in front of others
                     >
                         <Popup>
                             <h3>{marker.name}</h3>
