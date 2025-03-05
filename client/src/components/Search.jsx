@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "../styles/Search.css";
-import Mag from "../assets/magnifying-glass.png";
-import X from "../assets/x.png";
+import Mag from "../assets/searchIcon.png";
+import X from "../assets/exitIcon.png";
 
 export default function Search(props) {
     const { onCurrentMarkersChange, currentLocation } = props;

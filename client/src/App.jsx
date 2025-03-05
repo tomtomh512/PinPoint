@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Profile from "./components/Profile";
 import Search from "./components/Search";
 import Favorites from "./components/Favorites";
 import Saved from "./components/Saved";
@@ -48,6 +49,7 @@ export default function App() {
             {showPanel &&
                 <Routes>
                     <Route path="/" element={<Search />} />
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="/favorites" element={<Favorites />} />
                     <Route path="/saved" element={<Saved />} />
                 </Routes>

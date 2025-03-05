@@ -1,10 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import "../styles/Navbar.css";
-import MenuIcon from "../assets/menuIcon.png";
-import SearchIcon from "../assets/magnifying-glass.png";
-import HeartIcon from "../assets/heart.png";
-import SavedIcon from "../assets/saved.png";
+import ToggleIcon from "../assets/menuIcon.png";
+import ProfileIcon from "../assets/profileIcon.png";
+import SearchIcon from "../assets/searchIcon.png";
+import HeartIcon from "../assets/heartIcon.png";
+import SavedIcon from "../assets/savedIcon.png";
 
 export default function Navbar(props) {
     const {togglePanel} = props;
@@ -12,11 +13,15 @@ export default function Navbar(props) {
     return (
         <div className="sidebar-container">
             <span className="navbar-link" onClick={togglePanel}>
-                <img src={MenuIcon} alt="Toggle"/>
+                <img src={ToggleIcon} alt="Toggle"/>
             </span>
 
             <Link to="/" className="navbar-link">
-            <img src={SearchIcon} alt="Search"/>
+                <img src={SearchIcon} alt="Search"/>
+            </Link>
+
+            <Link to="/profile" className="navbar-link">
+                <img src={ProfileIcon} alt="Profile"/>
             </Link>
 
             <Link to="/favorites" className="navbar-link">
@@ -26,6 +31,7 @@ export default function Navbar(props) {
             <Link to="/saved" className="navbar-link">
                 <img src={SavedIcon} alt="Saved"/>
             </Link>
+
         </div>
     );
 }
