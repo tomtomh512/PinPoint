@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import "../styles/Search.css";
 import Mag from "../assets/searchIcon.png";
 import X from "../assets/exitIcon.png";
@@ -70,8 +70,8 @@ export default function Search(props) {
                 </span>
             }
 
-
             <Listings listings={searchResults} />
+
         </div>
 
     );

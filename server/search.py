@@ -41,13 +41,19 @@ def searchInput(querySearch, lat, long, limit):
             address = listing["address"]["label"]
             lat = listing["position"]["lat"]
             long = listing["position"]["lng"]
+            categories = listing.get("categories", [])
+            contacts = listing.get("contacts", [])
+            hours = listing.get("openingHours", [])
 
             results.append({
                 "name": name,
                 "id": id,
                 "address": address,
                 "lat": lat,
-                "long": long
+                "long": long,
+                "categories": categories,
+                "contacts": contacts,
+                "hours": hours
             })
 
         return results
