@@ -44,15 +44,15 @@ export default function Map(props) {
         <div className="map-container">
             <MapContainer center={[currentLocation.lat, currentLocation.long]} zoom={12} zoomControl={false}>
                 <ZoomControl position="bottomright" />
-                <ChangeView center={[activeMarker?.lat || currentLocation.lat, activeMarker?.long || currentLocation.long]} />
+                <ChangeView center={[currentLocation.lat, currentLocation.long]} />
                 <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"/>
 
                 {markers.map(marker => (
                     <Marker
                         position={[marker.lat, marker.long]}
-                        icon={marker.id === activeMarker?.id ? customHighlightedIcon : customIcon}
+                        icon={marker.id === activeMarker.id ? customHighlightedIcon : customIcon}
                         key={marker.id + "-marker"}
-                        zIndexOffset={marker.id === activeMarker?.id ? 1000 : 0} // Set active marker in front of others
+                        zIndexOffset={marker.id === activeMarker.id ? 1000 : 0} // Set active marker in front of others
                     >
                         <Popup>
                             <h3>{marker.name}</h3>
@@ -62,5 +62,4 @@ export default function Map(props) {
             </MapContainer>
         </div>
     );
-
 }
