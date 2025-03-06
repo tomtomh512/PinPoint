@@ -1,7 +1,7 @@
 import os
 import requests
 
-# Load API Key from ,env file
+# Load API Key from .env file
 from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
@@ -10,7 +10,6 @@ API_KEY = os.getenv('API_KEY')
 url = "https://discover.search.hereapi.com/v1/discover"
 
 
-# Takes a query search and results limit
 def searchInput(querySearch, lat, long, limit):
 
     params = {
@@ -32,7 +31,6 @@ def searchInput(querySearch, lat, long, limit):
         data = response.json()
         resultList = data["items"]
 
-        # Return list of results
         results = []
 
         for listing in resultList:

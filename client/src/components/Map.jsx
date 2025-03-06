@@ -7,15 +7,14 @@ import { Icon } from 'leaflet';
 export default function Map(props) {
     const { markers, currentLocation, onViewChange, activeMarker } = props;
 
-    const iconSize = 38;
     const customIcon = new Icon({
-        iconUrl: require("../assets/pin4.png"),
-        iconSize: [iconSize, iconSize]
+        iconUrl: require("../assets/pin-blue.png"),
+        iconSize: [38, 38]
     });
 
     const customHighlightedIcon = new Icon({
-        iconUrl: require("../assets/pin5.png"),
-        iconSize: [iconSize, iconSize]
+        iconUrl: require("../assets/pin-red.png"),
+        iconSize: [42, 42]
     });
 
     function ChangeView({ center }) {

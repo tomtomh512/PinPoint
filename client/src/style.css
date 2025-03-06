@@ -19,14 +19,7 @@ body {
     z-index: 1;
     height: 100vh;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-    overflow-y: scroll;
-    scrollbar-width: none;  /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
     border-left: 1px solid lightgray;
-}
-
-.main-content-element::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari, and Opera */
 }
 
 .main-content-element > h1 {

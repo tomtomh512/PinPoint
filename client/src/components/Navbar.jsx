@@ -1,19 +1,24 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import "../styles/Navbar.css";
-import ToggleIcon from "../assets/menuIcon.png";
 import ProfileIcon from "../assets/profileIcon.png";
 import SearchIcon from "../assets/searchIcon.png";
 import HeartIcon from "../assets/heartIcon.png";
 import SavedIcon from "../assets/savedIcon.png";
+import NavBarIn from "../assets/navBarIn.png";
+import NavBarOut from "../assets/navBarOut.png";
 
 export default function Navbar(props) {
-    const {togglePanel, togglePanelTrue} = props;
+    const {togglePanel, togglePanelTrue, showPanel} = props;
 
     return (
         <div className="sidebar-container">
             <span className="navbar-link" onClick={togglePanel}>
-                <img src={ToggleIcon} alt="Toggle"/>
+                {showPanel ?
+                    <img src={NavBarIn} alt="Toggle"/>
+                    :
+                    <img src={NavBarOut} alt="Toggle"/>
+                }
             </span>
 
             <Link to="/" className="navbar-link" onClick={togglePanelTrue}>

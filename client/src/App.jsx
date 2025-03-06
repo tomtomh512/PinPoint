@@ -42,7 +42,11 @@ export default function App() {
 
     return (
         <main className="main-container">
-            <Navbar togglePanel={togglePanel} togglePanelTrue={togglePanelTrue} />
+            <Navbar
+                togglePanel={togglePanel}
+                togglePanelTrue={togglePanelTrue}
+                showPanel={showPanel}
+            />
 
             <Map
                 markers={currentMarkers}
