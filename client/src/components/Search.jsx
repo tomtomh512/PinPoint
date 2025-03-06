@@ -6,14 +6,10 @@ import Listings from "./Listings";
 
 export default function Search(props) {
     const {
-        setCurrentMarkers,
-        currentLocation,
-        searchInput,
-        setSearchInput,
-        searchResults,
-        setSearchResults,
-        activeMarker,
-        setActiveMarker
+        setCurrentMarkers, currentLocation,
+        searchInput, setSearchInput,
+        searchResults, setSearchResults,
+        activeMarker, setActiveMarker
     } = props;
 
     // Moved to app.jsx

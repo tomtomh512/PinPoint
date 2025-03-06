@@ -4,6 +4,15 @@ import "../styles/Listings.css";
 export default function Listings(props) {
     const { listings, activeMarker, setActiveMarker } = props;
 
+    // Function to format phone number
+    const formatPhoneNumber = (phone) => {
+        // Remove non-digit characters (if any)
+        phone = phone.replace(/\D/g, '');
+
+        // Format the phone number
+        return phone.replace(/^(\d{1})(\d{3})(\d{3})(\d{4})$/, '+$1 $2-$3-$4');
+    };
+
     return (
         <section className="listings-container">
             {listings.map((listing) => (
@@ -46,6 +55,10 @@ export default function Listings(props) {
                                                         {item.value}
                                                     </a>
                                                 </li>
+                                            ) : key === "phone" ? (
+                                                <li key={item.value + itemIndex}>
+                                                    {formatPhoneNumber(item.value)}
+                                                </li>
                                             ) : (
                                                 <li key={item.value + itemIndex}>
                                                     {item.value}
@@ -67,6 +80,7 @@ export default function Listings(props) {
                     </section>
                 </div>
             ))}
+            <br/>
         </section>
     );
 }

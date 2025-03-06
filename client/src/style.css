@@ -20,6 +20,8 @@ body {
     height: 100vh;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
     border-left: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
 }
 
 .main-content-element > h1 {
