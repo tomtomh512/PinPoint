@@ -9,9 +9,14 @@ import Map from "./components/Map";
 import "./style.css";
 
 export default function App() {
+
+    // Persist search input & results
+    const [searchInput, setSearchInput] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+
     // Current markers on map
     const [currentMarkers, setCurrentMarkers] = useState([]);
-    // Highlighted marker on map
+    // Highlighted marker on map, also acts as highlighted listing to expand
     const [activeMarker, setActiveMarker] = useState({});
     // Current coordinates of map view
     const [currentLocation, setCurrentLocation] = useState({
@@ -61,6 +66,11 @@ export default function App() {
                         <Search
                             setCurrentMarkers={setCurrentMarkers}
                             currentLocation={currentLocation}
+                            searchInput={searchInput}
+                            setSearchInput={setSearchInput}
+                            searchResults={searchResults}
+                            setSearchResults={setSearchResults}
+                            activeMarker={activeMarker}
                             setActiveMarker={setActiveMarker}
                         />
                     }/>

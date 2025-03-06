@@ -1,15 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import "../styles/Listings.css";
 
 export default function Listings(props) {
-    const { listings, setActiveMarker } = props;
-
-    const [expandedListing, setExpandedListing] = useState({});
-
-    const handleListingClick = (listing) => {
-        setActiveMarker(listing);
-        setExpandedListing(listing);
-    };
+    const { listings, activeMarker, setActiveMarker } = props;
 
     return (
         <section className="listings-container">
@@ -17,7 +10,7 @@ export default function Listings(props) {
                 <div
                     key={listing.id + "-listing"}
                     className="listing-card"
-                    onClick={() => handleListingClick(listing)}
+                    onClick={() => setActiveMarker(listing)}
                 >
                     <h3>{listing.name}</h3>
                     <p>{listing.address}</p>
@@ -37,7 +30,7 @@ export default function Listings(props) {
                     <br />
 
                     {/* If the current listing is the selected listing to be expanded */}
-                    {listing.id === expandedListing.id ?
+                    {listing.id === activeMarker.id ?
 
                         <section className="contacts">
                             {/* If the current listing has contacts */}

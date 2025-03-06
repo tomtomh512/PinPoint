@@ -1,14 +1,24 @@
-import React, {useState} from "react";
+import React from "react";
 import "../styles/Search.css";
 import SearchIcon from "../assets/searchIcon.png";
 import ExitIcon from "../assets/exitIcon.png";
 import Listings from "./Listings";
 
 export default function Search(props) {
-    const { setCurrentMarkers, currentLocation, setActiveMarker } = props;
+    const {
+        setCurrentMarkers,
+        currentLocation,
+        searchInput,
+        setSearchInput,
+        searchResults,
+        setSearchResults,
+        activeMarker,
+        setActiveMarker
+    } = props;
 
-    const [searchInput, setSearchInput] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
+    // Moved to app.jsx
+    // const [searchInput, setSearchInput] = useState("");
+    // const [searchResults, setSearchResults] = useState([]);
 
     // Calls API, takes coordinates and search query
     function handleSubmit(event) {
@@ -74,7 +84,11 @@ export default function Search(props) {
                 :
                 <>
                     <span> {searchResults.length} {searchResults.length === 1 ? "result" : "results"} </span>
-                    <Listings listings={searchResults} setActiveMarker={setActiveMarker} />
+                    <Listings
+                        listings={searchResults}
+                        activeMarker={activeMarker}
+                        setActiveMarker={setActiveMarker}
+                    />
                 </>
             }
 
