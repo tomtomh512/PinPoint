@@ -3,6 +3,7 @@ import "../styles/Search.css";
 import SearchIcon from "../assets/searchIcon.png";
 import ExitIcon from "../assets/exitIcon.png";
 import Listings from "./Listings";
+import httpClient from "../httpClient";
 
 export default function Search(props) {
     const {
@@ -17,22 +18,25 @@ export default function Search(props) {
     // const [searchResults, setSearchResults] = useState([]);
 
     // Calls API, takes coordinates and search query
-    function handleSubmit(event) {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const queryParams = new URLSearchParams({
-            lat: currentLocation.lat,
-            long: currentLocation.long,
-            search: searchInput,
-        }).toString();
+        try {
+            const response = await httpClient.get("http://localhost:5000/search", {
+                params: {
+                    lat: currentLocation.lat,
+                    long: currentLocation.long,
+                    search: searchInput,
+                },
+            });
 
-        fetch(`/search?${queryParams}`)
-            .then(res => res.json())
-            .then(output => {
-                setCurrentMarkers(output.results);
-                setSearchResults(output.results);
-            })
-    }
+            setCurrentMarkers(response.data.results);
+            setSearchResults(response.data.results);
+
+        } catch (error) {
+            console.error("Error fetching search results:", error);
+        }
+    };
 
     // Warning if not included
     function handleSearchChange(event) {

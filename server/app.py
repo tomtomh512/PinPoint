@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from search import searchInput
 import requests
 
 app = Flask(__name__)
+
+
+CORS(app, supports_credentials=True)
 
 
 @app.route('/getLocation', methods=['GET'])
