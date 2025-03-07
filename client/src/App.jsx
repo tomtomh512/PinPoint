@@ -67,10 +67,6 @@ export default function App() {
         })();
     }, []);
 
-    useEffect(() => {
-
-    }, [user]);
-
     return (
         <main className="main-container">
             <Navbar

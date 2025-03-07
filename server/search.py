@@ -20,9 +20,9 @@ def searchInput(querySearch, lat, long, limit):
     }
 
     # Print the full GET URL
-    # request = requests.Request('GET', url, params=params)
-    # prepared = request.prepare()
-    # print("GET URL:", prepared.url)
+    request = requests.Request('GET', url, params=params)
+    prepared = request.prepare()
+    print("GET URL:", prepared.url)
 
     response = requests.get(url, params=params)
 

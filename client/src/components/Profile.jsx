@@ -23,7 +23,7 @@ export default function Profile(props) {
                 setUser({ id: null, email: null }); // Explicitly reset user on failure
             }
         })();
-    }, []);
+    }, [setUser]);
 
     return (
         <div className="profile-container main-content-element">
