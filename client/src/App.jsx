@@ -6,6 +6,7 @@ import Search from "./components/Search";
 import Favorites from "./components/Favorites";
 import Planned from "./components/Planned";
 import Map from "./components/Map";
+// import httpClient from "./httpClient";
 import "./style.css";
 
 export default function App() {
