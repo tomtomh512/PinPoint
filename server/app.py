@@ -1,26 +1,90 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
+from flask_bcrypt import Bcrypt
+from flask_session import Session
 from flask_cors import CORS
+
+from models import db, User
+from config import ApplicationConfig
 from search import searchInput
-import requests
 
 app = Flask(__name__)
+app.config.from_object(ApplicationConfig)
 
-
+bcrypt = Bcrypt(app)
 CORS(app, supports_credentials=True)
+server_session = Session(app)
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 
-@app.route('/getLocation', methods=['GET'])
-def get_location():
-    ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-    response = requests.get(f'http://ipinfo.io/{ip}/json')
-    data = response.json()
+# If logged in, return info on current logged in user
+@app.route("/verify")
+def get_current_user():
+    user_id = session.get("user_id")
 
-    lat_long = data.get("loc")
-    if lat_long:
-        lat, long = lat_long.split(",")
-        return jsonify({"lat": lat, "long": long})
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
 
-    return jsonify({"error": "Location not found"}), 404
+    user = User.query.filter_by(id=user_id).first()
+    return jsonify({
+        "id": user.id,
+        "username": user.username
+    })
+
+
+@app.route("/register", methods=["POST"])
+def register_user():
+    username = request.json["username"]
+    password = request.json["password"]
+
+    # If user exists with that username
+    user_exists = User.query.filter_by(username=username).first() is not None
+
+    if user_exists:
+        return jsonify({"error": "User already exists"}), 409
+
+    hashed_password = bcrypt.generate_password_hash(password)
+    new_user = User(username=username, password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    # Issue session cookie
+    session["user_id"] = new_user.id
+
+    return jsonify({
+        "id": new_user.id,
+        "username": new_user.username
+    })
+
+
+@app.route("/login", methods=["POST"])
+def login_user():
+    username = request.json["username"]
+    password = request.json["password"]
+
+    user = User.query.filter_by(username=username).first()
+
+    if user is None:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    if not bcrypt.check_password_hash(user.password, password):
+        return jsonify({"error": "Unauthorized"}), 401
+
+    # Issue session cookie
+    session["user_id"] = user.id
+
+    return jsonify({
+        "id": user.id,
+        "username": user.username
+    })
+
+
+@app.route("/logout", methods=["POST"])
+def logout_user():
+    session.pop("user_id", None)
+    return jsonify({"message": "Logged out successfully"}), 200
 
 
 @app.route('/search', methods=['GET'])

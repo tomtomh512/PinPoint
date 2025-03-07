@@ -6,11 +6,12 @@ import Search from "./components/Search";
 import Favorites from "./components/Favorites";
 import Planned from "./components/Planned";
 import Map from "./components/Map";
-// import httpClient from "./httpClient";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import httpClient from "./httpClient";
 import "./style.css";
 
 export default function App() {
-
     // Persist search input & results
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -42,9 +43,33 @@ export default function App() {
         }
     }, []);
 
+    // Toggles panel
     const [showPanel, setShowPanel] = useState(true);
     const togglePanel = () => { setShowPanel(prev => !prev) }
     const togglePanelTrue = () => { setShowPanel(true) }
+
+    // User info
+    const [user, setUser] = useState({
+        "id": null,
+        "username": null
+    })
+
+    useEffect(() => {
+        (async() => {
+            try {
+                const response = await httpClient.get("http://localhost:5000/verify");
+
+                setUser(response.data)
+            } catch (error) {
+                console.log("Not authenticated");
+                setUser({ id: null, email: null }); // Explicitly reset user on failure
+            }
+        })();
+    }, []);
+
+    useEffect(() => {
+
+    }, [user]);
 
     return (
         <main className="main-container">
@@ -74,9 +99,16 @@ export default function App() {
                             activeMarker={activeMarker}
                             setActiveMarker={setActiveMarker}
                         />
-                    }/>
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/favorites" element={<Favorites />} />
+                    } />
+                    <Route path="/profile" element={
+                        <Profile
+                            user={user}
+                            setUser={setUser}
+                        />
+                    } />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/favorites" element={<Favorites user={user} />} />
                     <Route path="/planned" element={<Planned />} />
                 </Routes>
             }
