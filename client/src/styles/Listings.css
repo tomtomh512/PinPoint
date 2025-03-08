@@ -33,7 +33,6 @@
 }
 
 .contacts > ul {
-
     margin: 5px auto;
 }
 
@@ -54,7 +53,6 @@
 }
 
 .button-container > button:hover {
-    color: white;
     cursor: pointer;
 }
 
