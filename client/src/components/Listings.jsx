@@ -2,16 +2,7 @@ import React from "react";
 import "../styles/Listings.css";
 
 export default function Listings(props) {
-    const { listings, selectedLocation, setSelectedLocation } = props;
-
-    // Function to format phone number
-    const formatPhoneNumber = (phone) => {
-        // Remove non-digit characters (if any)
-        phone = phone.replace(/\D/g, '');
-
-        // Format the phone number
-        return phone.replace(/^(\d{1})(\d{3})(\d{3})(\d{4})$/, '+$1 $2-$3-$4');
-    };
+    const { listings, selectedLocation, setSelectedLocation, user } = props;
 
     return (
         <section className="listings-container">
@@ -40,44 +31,65 @@ export default function Listings(props) {
 
                     {/* If the current listing is the selected listing to be expanded */}
                     {listing.id === selectedLocation.id ?
-
-                        <section className="contacts">
-                            {/* If the current listing has contacts */}
-                            {listing.contacts.length > 0 && <h3> Contacts </h3> }
-                            {/* Map out contacts. If contact is a website, add a link */}
-                            {listing.contacts.map((contact, index) => (
-                                <ul key={listing.id + "contact" + index}>
-                                    {Object.entries(contact).map(([key, values]) =>
-                                        values.map((item, itemIndex) => (
-                                            key === "www" ? (
-                                                <li key={item.value + itemIndex}>
-                                                    <a href={item.value} target="_blank" rel="noopener noreferrer">
+                        <>
+                            <section className="listing-list">
+                                {/* If the current listing has contacts */}
+                                {listing.contacts.length > 0 && <h3> Contacts </h3>}
+                                {/* Map out contacts. If contact is a website, add a link */}
+                                {listing.contacts.map((contact, index) => (
+                                    <ul key={listing.id + "contact" + index}>
+                                        {Object.entries(contact).map(([key, values]) =>
+                                            values.map((item, itemIndex) => (
+                                                key === "www" ? (
+                                                    <li key={item.value + itemIndex}>
+                                                        <a href={item.value} target="_blank" rel="noopener noreferrer">
+                                                            {item.value}
+                                                        </a>
+                                                    </li>
+                                                ) : (
+                                                    <li key={item.value + itemIndex}>
                                                         {item.value}
-                                                    </a>
-                                                </li>
-                                            ) : key === "phone" ? (
-                                                <li key={item.value + itemIndex}>
-                                                    {formatPhoneNumber(item.value)}
-                                                </li>
-                                            ) : (
-                                                <li key={item.value + itemIndex}>
-                                                    {item.value}
-                                                </li>
-                                            )
-                                        ))
-                                    )}
-                                </ul>
-                            ))}
-                        </section>
+                                                    </li>
+                                                )
+                                            ))
+                                        )}
+                                    </ul>
+                                ))}
+                            </section>
 
+                            {listing.hours[0] && listing.hours[0].text ?
+                                <section className="listing-list">
+                                    <h3> Hours </h3>
+                                    <ul>
+                                        {listing.hours[0].text.map((hour, index) => (
+                                            <li key={index + "hour"}> {hour} </li>
+                                        ))}
+                                    </ul>
+                                </section>
+                                :
+                                ""
+                            }
+                        </>
                         :
                         ""
                     }
 
-                    <section className="button-container">
-                        <button className="favorite-button"> Favorite +</button>
-                        <button className="planned-button"> Planned +</button>
+                    <section className="listing-footer">
+                        <div
+                            className="isOpen-indicator"
+                            style={{color: listing.hours[0] && listing.hours[0].isOpen ? 'green' : 'red'}}
+                        >
+                            {listing.hours[0] && listing.hours[0].isOpen ? "Open" : "Closed"}
+                        </div>
+                        <div className="button-container">
+                            <button className="favorite-button"> Favorite +</button>
+                            <button className="planned-button"> Planned +</button>
+                        </div>
                     </section>
+
+
+
+
                 </div>
             ))}
             <br/>

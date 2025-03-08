@@ -96,6 +96,7 @@ export default function App() {
                             setSearchResults={setSearchResults}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
+                            user={user}
                         />
                     } />
                     <Route path="/profile" element={

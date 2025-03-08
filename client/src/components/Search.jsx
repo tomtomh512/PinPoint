@@ -10,7 +10,8 @@ export default function Search(props) {
         setCurrentMarkers, currentLocation,
         searchInput, setSearchInput,
         searchResults, setSearchResults,
-        selectedLocation, setSelectedLocation
+        selectedLocation, setSelectedLocation,
+        user
     } = props;
 
     // Moved to app.jsx
@@ -78,6 +79,7 @@ export default function Search(props) {
                         listings={searchResults}
                         selectedLocation={selectedLocation}
                         setSelectedLocation={setSelectedLocation}
+                        user={user}
                     />
                 </>
             }
