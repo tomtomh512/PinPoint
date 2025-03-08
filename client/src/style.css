@@ -67,3 +67,22 @@ body {
     text-align: center;
     font-size: 1.5rem;
 }
+
+.login-logout-button {
+    all: unset;
+    border-radius: 25px;
+    border: 1px solid black;
+    margin: 10px 5px 5px;
+    padding: 5px 10px;
+    color: white;
+    background-color: black;
+    transition: 0.25s;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.login-logout-button:hover {
+    background-color: #278bed;
+    border: 1px solid #278bed;
+    cursor: pointer;
+}

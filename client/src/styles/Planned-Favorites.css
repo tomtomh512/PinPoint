@@ -1,3 +1,7 @@
+.planned-container > h2, .favorites-container > h2 {
+    margin: 10px;
+}
+
 .planned-container > span, .favorites-container > span {
     font-size: 1.1rem;
     margin-left: 10px;

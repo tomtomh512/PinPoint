@@ -3,6 +3,7 @@ import ExitIcon from "../assets/exitIcon.png";
 import SearchIcon from "../assets/searchIcon.png";
 import Listings from "./Listings";
 import "../styles/Planned-Favorites.css";
+import {Link} from "react-router-dom";
 
 export default function Favorites(props) {
     const {
@@ -66,7 +67,8 @@ export default function Favorites(props) {
                 </>
                 :
                 <>
-                    Log in plz
+                    <h2> Log in to save to favorites </h2>
+                    <Link to="/profile" className="login-logout-button"> Login </Link>
                 </>
             }
         </div>

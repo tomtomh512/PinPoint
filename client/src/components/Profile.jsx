@@ -32,12 +32,18 @@ export default function Profile(props) {
             {user.id && user.username ?
                 <>
                     <h2> Welcome, {user.username} </h2>
-                    <button onClick={logoutUser} className="logout-button"> Log Out</button>
+
+                    <section className="view-lists">
+                        <Link to="/favorites" className="view-lists-favorites"> View Favorites </Link>
+                        <Link to="/planned" className="view-lists-planned"> View Planned </Link>
+                    </section>
+
+                    <button onClick={logoutUser} className="login-logout-button"> Log Out</button>
                 </>
                 :
                 <>
                     <h2> You are not logged in </h2>
-                    <Link to="/login" className="login-button"> Login </Link>
+                    <Link to="/login" className="login-logout-button"> Login </Link>
                     <Link to="/register" className="register-link"> Register </Link>
                 </>
             }
