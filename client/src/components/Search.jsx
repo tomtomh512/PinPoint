@@ -38,16 +38,6 @@ export default function Search(props) {
         }
     };
 
-    // Warning if not included
-    function handleSearchChange(event) {
-        setSearchInput(event.target.value);
-    }
-
-    // Clears the search input
-    function handleClear() {
-        setSearchInput("");
-    }
-
     // Lets 'Enter' act as submit button
     function handleKeyDown(event) {
         if (event.key === "Enter") {
@@ -65,11 +55,11 @@ export default function Search(props) {
                     name="search"
                     value={searchInput}
                     placeholder="Search"
-                    onChange={handleSearchChange}
+                    onChange={(e) => {setSearchInput(e.target.value)}}
                     onKeyDown={handleKeyDown}
                 />
 
-                <button onClick={handleClear}>
+                <button onClick={() => {setSearchInput("")}}>
                     <img src={ExitIcon} alt="X"/>
                 </button>
 

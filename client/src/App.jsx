@@ -55,17 +55,19 @@ export default function App() {
     })
 
     useEffect(() => {
-        (async() => {
+        const verifyUser = async () => {
             try {
                 const response = await httpClient.get("http://localhost:5000/verify");
-
-                setUser(response.data)
+                setUser(response.data);
             } catch (error) {
-                console.log("Not authenticated");
-                setUser({ id: null, email: null }); // Explicitly reset user on failure
+                console.error("Authentication failed:", error.message);
+                setUser({ id: null, email: null });
             }
-        })();
+        };
+
+        verifyUser();
     }, []);
+
 
     return (
         <main className="main-container">

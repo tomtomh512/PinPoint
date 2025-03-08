@@ -5,6 +5,7 @@ import httpClient from "../httpClient";
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [alertMessage, setAlertMessage] = useState("");
     const navigate = useNavigate();
 
     const logInUser = async (event) => {
@@ -19,9 +20,7 @@ export default function Login() {
             navigate("/profile");
 
         } catch (error) {
-            if (error.response.status === 401) {
-                alert("Invalid credentials");
-            }
+            setAlertMessage(error.response.data.message);
         }
 
 
@@ -46,6 +45,8 @@ export default function Login() {
                     id=""
                 />
                 <button> Login</button>
+                <br />
+                {alertMessage}
             </form>
         </div>
     );
