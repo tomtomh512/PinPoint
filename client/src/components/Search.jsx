@@ -10,7 +10,7 @@ export default function Search(props) {
         setCurrentMarkers, currentLocation,
         searchInput, setSearchInput,
         searchResults, setSearchResults,
-        activeMarker, setActiveMarker
+        selectedLocation, setSelectedLocation
     } = props;
 
     // Moved to app.jsx
@@ -76,8 +76,8 @@ export default function Search(props) {
                     <span> {searchResults.length} {searchResults.length === 1 ? "result" : "results"} </span>
                     <Listings
                         listings={searchResults}
-                        activeMarker={activeMarker}
-                        setActiveMarker={setActiveMarker}
+                        selectedLocation={selectedLocation}
+                        setSelectedLocation={setSelectedLocation}
                     />
                 </>
             }

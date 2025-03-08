@@ -18,8 +18,8 @@ export default function App() {
 
     // Current markers on map
     const [currentMarkers, setCurrentMarkers] = useState([]);
-    // Highlighted marker on map, also acts as highlighted listing to expand
-    const [activeMarker, setActiveMarker] = useState({});
+    // Selected location, for expanding location card and highlighting marker
+    const [selectedLocation, setSelectedLocation] = useState({});
     // Current coordinates of map view
     const [currentLocation, setCurrentLocation] = useState({
         "lat": 40.730610,
@@ -81,7 +81,7 @@ export default function App() {
                 markers={currentMarkers}
                 currentLocation={currentLocation}
                 onViewChange={setCurrentLocation}
-                activeMarker={activeMarker}
+                selectedLocation={selectedLocation}
             />
 
             {showPanel &&
@@ -94,8 +94,8 @@ export default function App() {
                             setSearchInput={setSearchInput}
                             searchResults={searchResults}
                             setSearchResults={setSearchResults}
-                            activeMarker={activeMarker}
-                            setActiveMarker={setActiveMarker}
+                            selectedLocation={selectedLocation}
+                            setSelectedLocation={setSelectedLocation}
                         />
                     } />
                     <Route path="/profile" element={

@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Listings.css";
 
 export default function Listings(props) {
-    const { listings, activeMarker, setActiveMarker } = props;
+    const { listings, selectedLocation, setSelectedLocation } = props;
 
     // Function to format phone number
     const formatPhoneNumber = (phone) => {
@@ -19,7 +19,7 @@ export default function Listings(props) {
                 <div
                     key={listing.id + "-listing"}
                     className="listing-card"
-                    onClick={() => setActiveMarker(listing)}
+                    onClick={() => setSelectedLocation(listing)}
                 >
                     <h3>{listing.name}</h3>
                     <p>{listing.address}</p>
@@ -39,7 +39,7 @@ export default function Listings(props) {
                     <br />
 
                     {/* If the current listing is the selected listing to be expanded */}
-                    {listing.id === activeMarker.id ?
+                    {listing.id === selectedLocation.id ?
 
                         <section className="contacts">
                             {/* If the current listing has contacts */}

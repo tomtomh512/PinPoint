@@ -5,7 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from 'rea
 import { Icon } from 'leaflet';
 
 export default function Map(props) {
-    const { markers, currentLocation, onViewChange, activeMarker } = props;
+    const { markers, currentLocation, onViewChange, selectedLocation } = props;
 
     const customIcon = new Icon({
         iconUrl: require("../assets/pin-blue.png"),
@@ -48,9 +48,9 @@ export default function Map(props) {
                 {markers.map(marker => (
                     <Marker
                         position={[marker.lat, marker.long]}
-                        icon={marker.id === activeMarker.id ? customHighlightedIcon : customIcon}
+                        icon={marker.id === selectedLocation.id ? customHighlightedIcon : customIcon}
                         key={marker.id + "-marker"}
-                        zIndexOffset={marker.id === activeMarker.id ? 1000 : 0} // Set active marker in front of others
+                        zIndexOffset={marker.id === selectedLocation.id ? 1000 : 0} // Set active marker in front of others
                     >
                         <Popup>
                             <h3>{marker.name}</h3>
