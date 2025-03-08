@@ -12,9 +12,15 @@ import httpClient from "./httpClient";
 import "./style.css";
 
 export default function App() {
-    // Persist search input & results
+    // Placing in App.jsx to maintain persistence
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+
+    const [searchFavorites, setSearchFavorites] = useState("");
+    const [searchFavoritesResults, setSearchFavoritesResults] = useState([]);
+
+    const [searchPlanned, setSearchPlanned] = useState("");
+    const [searchPlannedResults, setSearchPlannedResults] = useState([]);
 
     // Current markers on map
     const [currentMarkers, setCurrentMarkers] = useState([]);
@@ -88,27 +94,49 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={
                         <Search
-                            setCurrentMarkers={setCurrentMarkers}
-                            currentLocation={currentLocation}
+                            user={user}
                             searchInput={searchInput}
                             setSearchInput={setSearchInput}
                             searchResults={searchResults}
                             setSearchResults={setSearchResults}
+                            setCurrentMarkers={setCurrentMarkers}
+                            currentLocation={currentLocation}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
-                            user={user}
                         />
                     } />
-                    <Route path="/profile" element={
-                        <Profile
-                            user={user}
-                            setUser={setUser}
-                        />
-                    } />
+
+                    <Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/favorites" element={<Favorites user={user} />} />
-                    <Route path="/planned" element={<Planned />} />
+
+                    <Route path="/favorites" element={
+                        <Favorites
+                            user={user}
+                            searchFavorites={searchFavorites}
+                            setSearchFavorites={setSearchFavorites}
+                            searchFavoritesResults={searchFavoritesResults}
+                            setSearchFavoritesResults={setSearchFavoritesResults}
+                            setCurrentMarkers={setCurrentMarkers}
+                            currentLocation={currentLocation}
+                            selectedLocation={selectedLocation}
+                            setSelectedLocation={setSelectedLocation}
+                        />
+                    } />
+
+                    <Route path="/planned" element={
+                        <Planned
+                            user={user}
+                            searchPlanned={searchPlanned}
+                            setSearchPlanned={setSearchPlanned}
+                            searchPlannedResults={searchPlannedResults}
+                            setSearchPlannedResults={setSearchPlannedResults}
+                            setCurrentMarkers={setCurrentMarkers}
+                            currentLocation={currentLocation}
+                            selectedLocation={selectedLocation}
+                            setSelectedLocation={setSelectedLocation}
+                        />
+                    } />
                 </Routes>
             }
         </main>

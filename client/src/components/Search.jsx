@@ -7,16 +7,12 @@ import httpClient from "../httpClient";
 
 export default function Search(props) {
     const {
-        setCurrentMarkers, currentLocation,
+        user,
         searchInput, setSearchInput,
         searchResults, setSearchResults,
+        setCurrentMarkers, currentLocation,
         selectedLocation, setSelectedLocation,
-        user
     } = props;
-
-    // Moved to app.jsx
-    // const [searchInput, setSearchInput] = useState("");
-    // const [searchResults, setSearchResults] = useState([]);
 
     // Calls API, takes coordinates and search query
     const handleSubmit = async (event) => {
@@ -76,10 +72,10 @@ export default function Search(props) {
                 <>
                     <span> {searchResults.length} {searchResults.length === 1 ? "result" : "results"} </span>
                     <Listings
+                        user={user}
                         listings={searchResults}
                         selectedLocation={selectedLocation}
                         setSelectedLocation={setSelectedLocation}
-                        user={user}
                     />
                 </>
             }

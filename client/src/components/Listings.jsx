@@ -2,7 +2,21 @@ import React from "react";
 import "../styles/Listings.css";
 
 export default function Listings(props) {
-    const { listings, selectedLocation, setSelectedLocation, user } = props;
+    const { user, listings, selectedLocation, setSelectedLocation } = props;
+
+    const addFavorite = (listing) => {
+        if (!user.id || !user.username) {
+            alert("Please log in to save to favorites")
+        }
+        console.log("Favorite " + listing);
+    }
+
+    const addPlanned = (listing) => {
+        if (!user.id || !user.username) {
+            alert("Please log in to save to favorites")
+        }
+        console.log("Planned " + listing);
+    }
 
     return (
         <section className="listings-container">
@@ -82,13 +96,10 @@ export default function Listings(props) {
                             {listing.hours[0] && listing.hours[0].isOpen ? "Open" : "Closed"}
                         </div>
                         <div className="button-container">
-                            <button className="favorite-button"> Favorite +</button>
-                            <button className="planned-button"> Planned +</button>
+                            <button className="favorite-button" onClick={() => addFavorite(listing)}> Favorite + </button>
+                            <button className="planned-button" onClick={() => addPlanned(listing)}> Planned + </button>
                         </div>
                     </section>
-
-
-
 
                 </div>
             ))}
