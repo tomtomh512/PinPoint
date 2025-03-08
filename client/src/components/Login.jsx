@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import httpClient from "../httpClient";
+import "../styles/Login-Registration.css";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -22,32 +23,40 @@ export default function Login() {
         } catch (error) {
             setAlertMessage(error.response.data.message);
         }
-
-
-    }
+    };
 
     return (
-        <div className="login-container main-content-element">
+        <div className="login-register-container main-content-element">
             <h1> Login </h1>
-            <form onSubmit={logInUser}>
+
+            <form>
+                <label> Enter username </label>
                 <input
                     type="text"
-                    placeholder="username"
+                    placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     id=""
                 />
+                <br/>
+
+                <label> Enter password </label>
                 <input
                     type="password"
-                    placeholder="password"
+                    placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     id=""
                 />
-                <button> Login</button>
-                <br />
-                {alertMessage}
+
             </form>
+
+            <button onClick={logInUser} className="login-register-button"> Login</button>
+
+            <br/>
+            {alertMessage}
+
+            <Link to="/profile" className="login-register-back-link"> Back </Link>
         </div>
     );
 }

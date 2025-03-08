@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import httpClient from "../httpClient";
+import "../styles/Login-Registration.css";
 
 export default function Register() {
     const [username, setUsername] = useState("");
@@ -31,31 +32,42 @@ export default function Register() {
     };
 
     return (
-        <div className="register-container main-content-element">
+        <div className="login-register-container main-content-element">
             <h1> Register </h1>
-            <form onSubmit={registerUser}>
+
+            <form>
+                <label> Enter username </label>
                 <input
                     type="text"
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
+                <br/>
+                <label> Enter password </label>
                 <input
-                    type="password"
+                    type="Password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                <br/>
+
+                <label> Confirm username </label>
                 <input
                     type="password"
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                <button>Register</button>
-                <br />
-                {alertMessage}
+
             </form>
+            <button onClick={registerUser} className="login-register-button">Register</button>
+
+            <br/>
+            {alertMessage}
+
+            <Link to="/profile" className="login-register-back-link"> Back </Link>
         </div>
     );
 }

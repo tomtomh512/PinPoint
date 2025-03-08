@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import httpClient from "../httpClient";
+import "../styles/Profile.css";
 
 export default function Profile(props) {
     const { user, setUser } = props;
@@ -31,13 +32,14 @@ export default function Profile(props) {
 
             {user.id && user.username ?
                 <>
-                    <h1> Logged In! </h1>
-                    <button onClick={logoutUser}> Log Out</button>
+                    <h2> Welcome, {user.username} </h2>
+                    <button onClick={logoutUser} className="logout-button"> Log Out</button>
                 </>
                 :
                 <>
-                    <Link to="/login"> Login </Link>
-                    <Link to="/register"> Register </Link>
+                    <h2> You are not logged in </h2>
+                    <Link to="/login" className="login-button"> Login </Link>
+                    <Link to="/register" className="register-link"> Register </Link>
                 </>
             }
         </div>
