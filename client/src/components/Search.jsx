@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "../styles/Search.css";
 import SearchIcon from "../assets/searchIcon.png";
 import ExitIcon from "../assets/exitIcon.png";
@@ -8,11 +8,12 @@ import httpClient from "../httpClient";
 export default function Search(props) {
     const {
         user,
-        searchInput, setSearchInput,
-        searchResults, setSearchResults,
         setCurrentMarkers, currentLocation,
         selectedLocation, setSelectedLocation,
     } = props;
+
+    const [searchInput, setSearchInput] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     // Calls API, takes coordinates and search query
     const handleSubmit = async (event) => {

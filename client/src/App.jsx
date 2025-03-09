@@ -12,16 +12,6 @@ import httpClient from "./httpClient";
 import "./style.css";
 
 export default function App() {
-    // Placing in App.jsx to maintain persistence
-    const [searchInput, setSearchInput] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
-
-    const [searchFavorites, setSearchFavorites] = useState("");
-    const [searchFavoritesResults, setSearchFavoritesResults] = useState([]);
-
-    const [searchPlanned, setSearchPlanned] = useState("");
-    const [searchPlannedResults, setSearchPlannedResults] = useState([]);
-
     // Current markers on map
     const [currentMarkers, setCurrentMarkers] = useState([]);
     // Selected location, for expanding location card and highlighting marker
@@ -95,10 +85,6 @@ export default function App() {
                     <Route path="/" element={
                         <Search
                             user={user}
-                            searchInput={searchInput}
-                            setSearchInput={setSearchInput}
-                            searchResults={searchResults}
-                            setSearchResults={setSearchResults}
                             setCurrentMarkers={setCurrentMarkers}
                             currentLocation={currentLocation}
                             selectedLocation={selectedLocation}
@@ -113,10 +99,6 @@ export default function App() {
                     <Route path="/favorites" element={
                         <Favorites
                             user={user}
-                            searchFavorites={searchFavorites}
-                            setSearchFavorites={setSearchFavorites}
-                            searchFavoritesResults={searchFavoritesResults}
-                            setSearchFavoritesResults={setSearchFavoritesResults}
                             setCurrentMarkers={setCurrentMarkers}
                             currentLocation={currentLocation}
                             selectedLocation={selectedLocation}
@@ -127,10 +109,6 @@ export default function App() {
                     <Route path="/planned" element={
                         <Planned
                             user={user}
-                            searchPlanned={searchPlanned}
-                            setSearchPlanned={setSearchPlanned}
-                            searchPlannedResults={searchPlannedResults}
-                            setSearchPlannedResults={setSearchPlannedResults}
                             setCurrentMarkers={setCurrentMarkers}
                             currentLocation={currentLocation}
                             selectedLocation={selectedLocation}

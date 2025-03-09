@@ -1,22 +1,53 @@
 import React from "react";
 import "../styles/Listings.css";
+import httpClient from "../httpClient";
 
 export default function Listings(props) {
     const { user, listings, selectedLocation, setSelectedLocation } = props;
 
-    const addFavorite = (listing) => {
+    const addFavorite = async (listing) => {
         if (!user.id || !user.username) {
-            alert("Please log in to save to favorites")
+            alert("Please log in to save to favorites");
+            return; // Stop the function execution here if the user isn't logged in
         }
-        console.log("Favorite " + listing);
-    }
 
-    const addPlanned = (listing) => {
-        if (!user.id || !user.username) {
-            alert("Please log in to save to favorites")
+        try {
+            await httpClient.post("http://localhost:5000/favorites", {
+                user_id: user.id,
+                location_name: listing.name,
+                location_id: listing.id,
+                address: listing.address,
+                categories: listing.categories,
+            });
+
+            alert("Location added to favorites!");
+        } catch (error) {
+            console.error("Error adding to favorites:", error);
+            alert("Something went wrong while adding to favorites.");
         }
-        console.log("Planned " + listing);
-    }
+    };
+
+    const addPlanned = async (listing) => {
+        if (!user.id || !user.username) {
+            alert("Please log in to save to planned");
+            return; // Stop the function execution here if the user isn't logged in
+        }
+
+        try {
+            await httpClient.post("http://localhost:5000/planned", {
+                user_id: user.id,
+                location_name: listing.name,
+                location_id: listing.id,
+                address: listing.address,
+                categories: listing.categories,
+            });
+
+            alert("Location added to planned!");
+        } catch (error) {
+            console.error("Error adding to planned:", error);
+            alert("Something went wrong while adding to planned.");
+        }
+    };
 
     return (
         <section className="listings-container">
