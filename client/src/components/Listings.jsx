@@ -2,13 +2,28 @@ import React, {useEffect} from "react";
 import "../styles/Listings.css";
 import httpClient from "../httpClient";
 
-export default function SearchListings(props) {
-    const { user, listings, selectedLocation, setSelectedLocation } = props;
+export default function FPListings(props) {
+    const { user, mode, listings, setListings, selectedLocation, setSelectedLocation } = props;
 
-    useEffect(() => {
-        console.log("Search");
-        console.log(selectedLocation);
-    }, [selectedLocation]);
+    const handleClick = async (listing) => {
+        if (mode === "search") {
+            setSelectedLocation(listing);
+            return;
+        }
+
+        try {
+            const response = await httpClient.get("http://localhost:5000/searchID", {
+                params: {
+                    id: listing.location_id
+                },
+            });
+
+            setSelectedLocation(response.data.result);
+
+        } catch (error) {
+            console.error("Error fetching id:", error);
+        }
+    }
 
     const addFavorite = async (listing) => {
         if (!user.id || !user.username) {
@@ -58,13 +73,56 @@ export default function SearchListings(props) {
         }
     };
 
+    const removeFavorite = async (listing) => {
+        if (!user.id || !user.username) {
+            alert("Please log in to remove from favorites");
+            return; // Stop execution if user isn't logged in
+        }
+
+        try {
+            const response = await httpClient.delete(`http://localhost:5000/favorites/${listing.id}`);
+
+            if (response.status === 200) {
+                alert("Location removed from favorites!");
+                setListings((prevListings) => prevListings.filter(item => item.id !== listing.id));
+            } else {
+                alert("Error removing from favorites.");
+            }
+        } catch (error) {
+            console.error("Error removing from favorites:", error);
+            alert("Something went wrong while removing from favorites.");
+        }
+    };
+
+    const removePlanned = async (listing) => {
+        if (!user.id || !user.username) {
+            alert("Please log in to remove from planned");
+            return; // Stop execution if user isn't logged in
+        }
+
+        try {
+            const response = await httpClient.delete(`http://localhost:5000/planned/${listing.id}`);
+
+            if (response.status === 200) {
+                alert("Location removed from planned!");
+                setListings((prevListings) => prevListings.filter(item => item.id !== listing.id));
+            } else {
+                alert("Error removing from planned.");
+            }
+        } catch (error) {
+            console.error("Error removing from planned:", error);
+            alert("Something went wrong while removing from planned.");
+        }
+    };
+
+
     return (
         <section className="listings-container">
             {listings.map((listing) => (
                 <div
                     key={listing.location_id + "-listing"}
                     className="listing-card"
-                    onClick={() => setSelectedLocation(listing)}
+                    onClick={() => handleClick(listing)}
                 >
                     <h3>{listing.name}</h3>
                     <p>{listing.address}</p>
@@ -128,6 +186,7 @@ export default function SearchListings(props) {
                                             <li key={index + "hour"}> {hour} </li>
                                         ))}
                                     </ul>
+
                                 </section>
                                 :
                                 ""
@@ -138,9 +197,29 @@ export default function SearchListings(props) {
                     }
 
                     <section className="button-container">
-                        <button className="favorite-button" onClick={() => addFavorite(listing)}> Favorite +</button>
-                        <button className="planned-button" onClick={() => addPlanned(listing)}> Planned +</button>
+                        {mode === "search" ?
+                            <>
+                                <button className="favorite-button" onClick={() => addFavorite(listing)}> Favorite +</button>
+                                <button className="planned-button" onClick={() => addPlanned(listing)}> Planned +</button>
+                            </>
+                            :
+                            <>
+                                {mode === "favorite" ?
+                                    <button className="favorite-button" onClick={() => removeFavorite(listing)}> Favorite
+                                        -</button>
+                                    :
+                                    <button className="favorite-button" onClick={() => addFavorite(listing)}> Favorite +</button>
+                                }
+                                {mode === "planned" ?
+                                    <button className="planned-button" onClick={() => removePlanned(listing)}> Planned -</button>
+                                    :
+                                    <button className="planned-button" onClick={() => addPlanned(listing)}> Planned +</button>
+                                }
+                            </>
+                        }
+
                     </section>
+
                 </div>
             ))}
             <br/>

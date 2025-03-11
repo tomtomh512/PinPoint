@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import "../styles/Search.css";
 import SearchIcon from "../assets/searchIcon.png";
 import ExitIcon from "../assets/exitIcon.png";
-import SearchListings from "./SearchListings";
+import Listings from "./Listings";
 import httpClient from "../httpClient";
 
 export default function Search(props) {
@@ -73,9 +73,11 @@ export default function Search(props) {
                 :
                 <>
                     <span> {searchResults.length} {searchResults.length === 1 ? "result" : "results"} </span>
-                    <SearchListings
+                    <Listings
                         user={user}
+                        mode="search"
                         listings={searchResults}
+                        setListings={setSearchResults}
                         selectedLocation={selectedLocation}
                         setSelectedLocation={setSelectedLocation}
                     />

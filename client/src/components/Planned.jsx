@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ExitIcon from "../assets/exitIcon.png";
 import SearchIcon from "../assets/searchIcon.png";
-import FPListings from "./FPListings";
+import Listings from "./Listings";
 import "../styles/Planned-Favorites.css";
 import {Link} from "react-router-dom";
 import httpClient from "../httpClient";
@@ -84,7 +84,7 @@ export default function Planned(props) {
                         :
                         <>
                             <span> {searchPlannedResults.length} {searchPlannedResults.length === 1 ? "result" : "results"} </span>
-                            <FPListings
+                            <Listings
                                 user={user}
                                 mode="planned"
                                 listings={searchPlannedResults}
