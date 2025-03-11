@@ -37,22 +37,12 @@
     margin: 5px auto;
 }
 
-.listing-footer {
-    display: flex;
-}
-
 .isOpen-indicator {
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    font-weight: bold;
+    font-size: 1rem;
 }
 
 .button-container {
-    display: inline-block;
     text-align: right;
-    flex: 2;
 }
 
 .button-container > button {

@@ -1,29 +1,31 @@
-import React from "react";
+import React, {useState} from "react";
 import "../styles/Search.css";
 import SearchIcon from "../assets/searchIcon.png";
 import ExitIcon from "../assets/exitIcon.png";
-import Listings from "./Listings";
+import SearchListings from "./SearchListings";
 import httpClient from "../httpClient";
 
 export default function Search(props) {
     const {
         user,
-        searchInput, setSearchInput,
-        searchResults, setSearchResults,
-        setCurrentMarkers, currentLocation,
+        setCurrentMarkers,
+        userLocation,
         selectedLocation, setSelectedLocation,
     } = props;
+
+    const [searchInput, setSearchInput] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     // Calls API, takes coordinates and search query
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            const response = await httpClient.get("http://localhost:5000/search", {
+            const response = await httpClient.get("http://localhost:5000/searchQuery", {
                 params: {
-                    lat: currentLocation.lat,
-                    long: currentLocation.long,
-                    search: searchInput,
+                    query: searchInput,
+                    lat: userLocation.lat,
+                    long: userLocation.long
                 },
             });
 
@@ -71,7 +73,7 @@ export default function Search(props) {
                 :
                 <>
                     <span> {searchResults.length} {searchResults.length === 1 ? "result" : "results"} </span>
-                    <Listings
+                    <SearchListings
                         user={user}
                         listings={searchResults}
                         selectedLocation={selectedLocation}

@@ -1,18 +1,20 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ExitIcon from "../assets/exitIcon.png";
 import SearchIcon from "../assets/searchIcon.png";
-import Listings from "./Listings";
+import FPListings from "./FPListings";
 import "../styles/Planned-Favorites.css";
 import {Link} from "react-router-dom";
+import httpClient from "../httpClient";
 
 export default function Planned(props) {
     const {
         user,
-        searchPlanned, setSearchPlanned,
-        searchPlannedResults, setSearchPlannedResults,
-        setCurrentMarkers, currentLocation,
+        setCurrentMarkers,
         selectedLocation, setSelectedLocation,
     } = props;
+
+    const [searchPlanned, setSearchPlanned] = useState("");
+    const [searchPlannedResults, setSearchPlannedResults] = useState([]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -25,6 +27,32 @@ export default function Planned(props) {
             handleSubmit(event);
         }
     }
+
+    useEffect(() => {
+        const fetchPlanned = async () => {
+            if (user.id && user.username) {
+                try {
+                    const response = await httpClient.get("http://localhost:5000/planned");
+                    if (response.status === 200) {
+                        setCurrentMarkers(response.data.results);
+                        setSearchPlannedResults(response.data.results);
+                    } else {
+                        console.error("Error fetching planned locations:", response.data);
+                        alert("Error fetching planned locations.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching planned locations:", error);
+                    alert("Something went wrong. Please try again later.");
+                }
+            }
+        };
+
+        fetchPlanned();
+    }, [user]);
+
+    useEffect(() => {
+        setCurrentMarkers(searchPlannedResults);
+    }, [searchPlannedResults]);
 
     return (
         <div className="planned-container main-content-element">
@@ -56,9 +84,11 @@ export default function Planned(props) {
                         :
                         <>
                             <span> {searchPlannedResults.length} {searchPlannedResults.length === 1 ? "result" : "results"} </span>
-                            <Listings
+                            <FPListings
                                 user={user}
+                                mode="planned"
                                 listings={searchPlannedResults}
+                                setListings={setSearchPlannedResults}
                                 selectedLocation={selectedLocation}
                                 setSelectedLocation={setSelectedLocation}
                             />

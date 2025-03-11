@@ -12,22 +12,12 @@ import httpClient from "./httpClient";
 import "./style.css";
 
 export default function App() {
-    // Placing in App.jsx to maintain persistence
-    const [searchInput, setSearchInput] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
-
-    const [searchFavorites, setSearchFavorites] = useState("");
-    const [searchFavoritesResults, setSearchFavoritesResults] = useState([]);
-
-    const [searchPlanned, setSearchPlanned] = useState("");
-    const [searchPlannedResults, setSearchPlannedResults] = useState([]);
-
     // Current markers on map
     const [currentMarkers, setCurrentMarkers] = useState([]);
     // Selected location, for expanding location card and highlighting marker
     const [selectedLocation, setSelectedLocation] = useState({});
     // Current coordinates of map view
-    const [currentLocation, setCurrentLocation] = useState({
+    const [userLocation, setUserLocation] = useState({
         "lat": 40.730610,
         "long": -73.935242,
     });
@@ -37,7 +27,7 @@ export default function App() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    setCurrentLocation({
+                    setUserLocation({
                         lat: position.coords.latitude,
                         long: position.coords.longitude,
                     });
@@ -85,8 +75,8 @@ export default function App() {
 
             <Map
                 markers={currentMarkers}
-                currentLocation={currentLocation}
-                onViewChange={setCurrentLocation}
+                userLocation={userLocation}
+                onViewChange={setUserLocation}
                 selectedLocation={selectedLocation}
             />
 
@@ -95,12 +85,8 @@ export default function App() {
                     <Route path="/" element={
                         <Search
                             user={user}
-                            searchInput={searchInput}
-                            setSearchInput={setSearchInput}
-                            searchResults={searchResults}
-                            setSearchResults={setSearchResults}
                             setCurrentMarkers={setCurrentMarkers}
-                            currentLocation={currentLocation}
+                            userLocation={userLocation}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
                         />
@@ -113,12 +99,7 @@ export default function App() {
                     <Route path="/favorites" element={
                         <Favorites
                             user={user}
-                            searchFavorites={searchFavorites}
-                            setSearchFavorites={setSearchFavorites}
-                            searchFavoritesResults={searchFavoritesResults}
-                            setSearchFavoritesResults={setSearchFavoritesResults}
                             setCurrentMarkers={setCurrentMarkers}
-                            currentLocation={currentLocation}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
                         />
@@ -127,12 +108,7 @@ export default function App() {
                     <Route path="/planned" element={
                         <Planned
                             user={user}
-                            searchPlanned={searchPlanned}
-                            setSearchPlanned={setSearchPlanned}
-                            searchPlannedResults={searchPlannedResults}
-                            setSearchPlannedResults={setSearchPlannedResults}
                             setCurrentMarkers={setCurrentMarkers}
-                            currentLocation={currentLocation}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
                         />
