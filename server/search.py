@@ -43,7 +43,7 @@ def searchQuery(querySearch, lat, long, limit):
 
             results.append({
                 "name": name,
-                "id": id,
+                "location_id": id,
                 "address": address,
                 "lat": lat,
                 "long": long,
@@ -88,7 +88,7 @@ def searchID(hereID):
 
         result = {
             "name": name,
-            "id": id,
+            "location_id": id,
             "address": address,
             "lat": lat,
             "long": long,

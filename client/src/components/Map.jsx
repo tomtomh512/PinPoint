@@ -48,9 +48,9 @@ export default function Map(props) {
                 {markers.map(marker => (
                     <Marker
                         position={[marker.lat, marker.long]}
-                        icon={marker.id === selectedLocation.id ? customHighlightedIcon : customIcon}
-                        key={marker.id + "-marker"}
-                        zIndexOffset={marker.id === selectedLocation.id ? 1000 : 0} // Set active marker in front of others
+                        icon={marker.location_id === selectedLocation.id ? customHighlightedIcon : customIcon}
+                        key={marker.location_id + "-marker"}
+                        zIndexOffset={marker.location_id === selectedLocation.id ? 1000 : 0} // Set active marker in front of others
                     >
                         <Popup>
                             <h3>{marker.name}</h3>

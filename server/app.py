@@ -170,7 +170,7 @@ def get_favorites():
 
         results.append({
             "id": fav.id,
-            "location_name": fav.location_name,
+            "name": fav.location_name,
             "location_id": fav.location_id,
             "address": fav.address,
             "date_added": fav.date_added,

@@ -15,7 +15,7 @@ export default function Listings(props) {
             await httpClient.post("http://localhost:5000/favorites", {
                 user_id: user.id,
                 location_name: listing.name,
-                location_id: listing.id,
+                location_id: listing.location_id,
                 address: listing.address,
                 categories: listing.categories,
             });
@@ -37,7 +37,7 @@ export default function Listings(props) {
             await httpClient.post("http://localhost:5000/planned", {
                 user_id: user.id,
                 location_name: listing.name,
-                location_id: listing.id,
+                location_id: listing.location_id,
                 address: listing.address,
                 categories: listing.categories,
             });
@@ -53,7 +53,7 @@ export default function Listings(props) {
         <section className="listings-container">
             {listings.map((listing) => (
                 <div
-                    key={listing.id + "-listing"}
+                    key={listing.location_id + "-listing"}
                     className="listing-card"
                     onClick={() => setSelectedLocation(listing)}
                 >
@@ -64,7 +64,7 @@ export default function Listings(props) {
 
                     <section className="categories">
                         {listing.categories.map((category, index) => (
-                            <span key={listing.id + category.id} className="category">
+                            <span key={listing.location_id + category.id} className="category">
                                 {category.name}
                                 {/* Puts dot between each category */}
                                 {index < listing.categories.length - 1 && " • "}
@@ -75,14 +75,14 @@ export default function Listings(props) {
                     <br />
 
                     {/* If the current listing is the selected listing to be expanded */}
-                    {listing.id === selectedLocation.id ?
+                    {listing.location_id === selectedLocation.location_id ?
                         <>
                             <section className="listing-list">
                                 {/* If the current listing has contacts */}
                                 {listing.contacts.length > 0 && <h3> Contacts </h3>}
                                 {/* Map out contacts. If contact is a website, add a link */}
                                 {listing.contacts.map((contact, index) => (
-                                    <ul key={listing.id + "contact" + index}>
+                                    <ul key={listing.location_id + "contact" + index}>
                                         {Object.entries(contact).map(([key, values]) =>
                                             values.map((item, itemIndex) => (
                                                 key === "www" ? (
