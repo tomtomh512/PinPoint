@@ -17,7 +17,7 @@ export default function App() {
     // Selected location, for expanding location card and highlighting marker
     const [selectedLocation, setSelectedLocation] = useState({});
     // Current coordinates of map view
-    const [currentLocation, setCurrentLocation] = useState({
+    const [userLocation, setUserLocation] = useState({
         "lat": 40.730610,
         "long": -73.935242,
     });
@@ -27,7 +27,7 @@ export default function App() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    setCurrentLocation({
+                    setUserLocation({
                         lat: position.coords.latitude,
                         long: position.coords.longitude,
                     });
@@ -75,8 +75,8 @@ export default function App() {
 
             <Map
                 markers={currentMarkers}
-                currentLocation={currentLocation}
-                onViewChange={setCurrentLocation}
+                userLocation={userLocation}
+                onViewChange={setUserLocation}
                 selectedLocation={selectedLocation}
             />
 
@@ -86,7 +86,7 @@ export default function App() {
                         <Search
                             user={user}
                             setCurrentMarkers={setCurrentMarkers}
-                            currentLocation={currentLocation}
+                            userLocation={userLocation}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
                         />
@@ -100,7 +100,6 @@ export default function App() {
                         <Favorites
                             user={user}
                             setCurrentMarkers={setCurrentMarkers}
-                            currentLocation={currentLocation}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
                         />
@@ -110,7 +109,6 @@ export default function App() {
                         <Planned
                             user={user}
                             setCurrentMarkers={setCurrentMarkers}
-                            currentLocation={currentLocation}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
                         />

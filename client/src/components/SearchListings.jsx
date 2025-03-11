@@ -1,9 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "../styles/Listings.css";
 import httpClient from "../httpClient";
 
-export default function Listings(props) {
+export default function SearchListings(props) {
     const { user, listings, selectedLocation, setSelectedLocation } = props;
+
+    useEffect(() => {
+        console.log("Search");
+        console.log(selectedLocation);
+    }, [selectedLocation]);
 
     const addFavorite = async (listing) => {
         if (!user.id || !user.username) {
@@ -18,6 +23,8 @@ export default function Listings(props) {
                 location_id: listing.location_id,
                 address: listing.address,
                 categories: listing.categories,
+                lat: listing.lat,
+                long: listing.long
             });
 
             alert("Location added to favorites!");
@@ -40,6 +47,8 @@ export default function Listings(props) {
                 location_id: listing.location_id,
                 address: listing.address,
                 categories: listing.categories,
+                lat: listing.lat,
+                long: listing.long
             });
 
             alert("Location added to planned!");
@@ -60,7 +69,7 @@ export default function Listings(props) {
                     <h3>{listing.name}</h3>
                     <p>{listing.address}</p>
 
-                    <hr />
+                    <hr/>
 
                     <section className="categories">
                         {listing.categories.map((category, index) => (
@@ -72,17 +81,17 @@ export default function Listings(props) {
                         ))}
                     </section>
 
-                    <br />
+                    <br/>
 
                     {/* If the current listing is the selected listing to be expanded */}
                     {listing.location_id === selectedLocation.location_id ?
                         <>
                             <section className="listing-list">
                                 {/* If the current listing has contacts */}
-                                {listing.contacts.length > 0 && <h3> Contacts </h3>}
+                                {selectedLocation.contacts.length > 0 && <h3> Contacts </h3>}
                                 {/* Map out contacts. If contact is a website, add a link */}
-                                {listing.contacts.map((contact, index) => (
-                                    <ul key={listing.location_id + "contact" + index}>
+                                {selectedLocation.contacts.map((contact, index) => (
+                                    <ul key={selectedLocation.location_id + "contact" + index}>
                                         {Object.entries(contact).map(([key, values]) =>
                                             values.map((item, itemIndex) => (
                                                 key === "www" ? (
@@ -102,11 +111,20 @@ export default function Listings(props) {
                                 ))}
                             </section>
 
-                            {listing.hours[0] && listing.hours[0].text ?
+                            <br/>
+
+                            {selectedLocation.hours[0] && selectedLocation.hours[0].text ?
                                 <section className="listing-list">
-                                    <h3> Hours </h3>
+                                    <h3> Hours
+                                        <span
+                                            className="isOpen-indicator"
+                                            style={{color: selectedLocation.hours[0] && selectedLocation.hours[0].isOpen ? 'green' : 'red'}}
+                                        >
+                                             &nbsp; {selectedLocation.hours[0] && selectedLocation.hours[0].isOpen ? "Open" : "Closed"}
+                                        </span>
+                                    </h3>
                                     <ul>
-                                        {listing.hours[0].text.map((hour, index) => (
+                                        {selectedLocation.hours[0].text.map((hour, index) => (
                                             <li key={index + "hour"}> {hour} </li>
                                         ))}
                                     </ul>
@@ -119,19 +137,10 @@ export default function Listings(props) {
                         ""
                     }
 
-                    <section className="listing-footer">
-                        <div
-                            className="isOpen-indicator"
-                            style={{color: listing.hours[0] && listing.hours[0].isOpen ? 'green' : 'red'}}
-                        >
-                            {listing.hours[0] && listing.hours[0].isOpen ? "Open" : "Closed"}
-                        </div>
-                        <div className="button-container">
-                            <button className="favorite-button" onClick={() => addFavorite(listing)}> Favorite + </button>
-                            <button className="planned-button" onClick={() => addPlanned(listing)}> Planned + </button>
-                        </div>
+                    <section className="button-container">
+                        <button className="favorite-button" onClick={() => addFavorite(listing)}> Favorite +</button>
+                        <button className="planned-button" onClick={() => addPlanned(listing)}> Planned +</button>
                     </section>
-
                 </div>
             ))}
             <br/>

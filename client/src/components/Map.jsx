@@ -5,7 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from 'rea
 import { Icon } from 'leaflet';
 
 export default function Map(props) {
-    const { markers, currentLocation, onViewChange, selectedLocation } = props;
+    const { markers, userLocation, onViewChange, selectedLocation } = props;
 
     const customIcon = new Icon({
         iconUrl: require("../assets/pin-blue.png"),
@@ -40,17 +40,17 @@ export default function Map(props) {
 
     return (
         <div className="map-container">
-            <MapContainer center={[currentLocation.lat, currentLocation.long]} zoom={12} zoomControl={false}>
+            <MapContainer center={[userLocation.lat, userLocation.long]} zoom={12} zoomControl={false}>
                 <ZoomControl position="bottomright" />
-                <ChangeView center={[currentLocation.lat, currentLocation.long]} />
+                <ChangeView center={[userLocation.lat, userLocation.long]} />
                 <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"/>
 
                 {markers.map(marker => (
                     <Marker
                         position={[marker.lat, marker.long]}
-                        icon={marker.location_id === selectedLocation.id ? customHighlightedIcon : customIcon}
+                        icon={marker.location_id === selectedLocation.location_id ? customHighlightedIcon : customIcon}
                         key={marker.location_id + "-marker"}
-                        zIndexOffset={marker.location_id === selectedLocation.id ? 1000 : 0} // Set active marker in front of others
+                        zIndexOffset={marker.location_id === selectedLocation.location_id ? 1000 : 0} // Set active marker in front of others
                     >
                         <Popup>
                             <h3>{marker.name}</h3>

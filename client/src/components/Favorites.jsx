@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ExitIcon from "../assets/exitIcon.png";
 import SearchIcon from "../assets/searchIcon.png";
-import Listings from "./Listings";
+import FPListings from "./FPListings";
 import "../styles/Planned-Favorites.css";
 import {Link} from "react-router-dom";
 import httpClient from "../httpClient";
@@ -9,7 +9,7 @@ import httpClient from "../httpClient";
 export default function Favorites(props) {
     const {
         user,
-        setCurrentMarkers, currentLocation,
+        setCurrentMarkers,
         selectedLocation, setSelectedLocation,
     } = props;
 
@@ -34,7 +34,8 @@ export default function Favorites(props) {
                 try {
                     const response = await httpClient.get("http://localhost:5000/favorites");
                     if (response.status === 200) {
-                        console.log(response.data); // Set the favorites data in state
+                        setCurrentMarkers(response.data.results);
+                        setSearchFavoritesResults(response.data.results);
                     } else {
                         console.error("Error fetching favorites:", response.data);
                         alert("Error fetching favorites.");
@@ -48,6 +49,10 @@ export default function Favorites(props) {
 
         fetchFavorites();
     }, [user]);
+
+    useEffect(() => {
+        setCurrentMarkers(searchFavoritesResults);
+    }, [searchFavoritesResults]);
 
     return (
         <div className="favorites-container main-content-element">
@@ -79,12 +84,14 @@ export default function Favorites(props) {
                         :
                         <>
                             <span> {searchFavoritesResults.length} {searchFavoritesResults.length === 1 ? "result" : "results"} </span>
-                            {/*<Listings*/}
-                            {/*    user={user}*/}
-                            {/*    listings={searchFavoritesResults}*/}
-                            {/*    selectedLocation={selectedLocation}*/}
-                            {/*    setSelectedLocation={setSelectedLocation}*/}
-                            {/*/>*/}
+                            <FPListings
+                                user={user}
+                                mode="favorite"
+                                listings={searchFavoritesResults}
+                                setListings={setSearchFavoritesResults}
+                                selectedLocation={selectedLocation}
+                                setSelectedLocation={setSelectedLocation}
+                            />
                         </>
                     }
                 </>

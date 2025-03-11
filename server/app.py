@@ -6,7 +6,7 @@ import re
 
 from models import db, User, Favorite, Planned, Category, Location
 from config import ApplicationConfig
-from search import searchQuery
+from search import searchQuery, searchID
 
 app = Flask(__name__)
 app.config.from_object(ApplicationConfig)
@@ -20,14 +20,22 @@ with app.app_context():
     db.create_all()
 
 
-@app.route('/search', methods=['GET'])
+@app.route('/searchQuery', methods=['GET'])
 def search():
-    query = request.args.get('search')
+    query = request.args.get('query')
     lat = request.args.get('lat')
     long = request.args.get('long')
 
     searchResults = searchQuery(query, lat, long, 50)
     return jsonify({"results": searchResults})
+
+
+@app.route('/searchID', methods=['GET'])
+def searchbyID():
+    id = request.args.get('id')
+
+    searchResult = searchID(id)
+    return jsonify({"result": searchResult})
 
 
 # If logged in, return info on current logged in user
@@ -115,6 +123,8 @@ def add_favorite():
     location_id = data.get("location_id")
     address = data.get("address")
     categories = data.get("categories", [])
+    lat = data.get("lat")
+    long = data.get("long")
 
     if not user_id or not location_name or not location_id or not address:
         return jsonify({"error": "Missing required fields"}), 400
@@ -125,7 +135,7 @@ def add_favorite():
         return jsonify({"error": "Location is already in favorites"}), 409
 
     # Create favorite entry
-    new_favorite = Favorite(user_id=user_id, location_name=location_name, location_id=location_id, address=address)
+    new_favorite = Favorite(user_id=user_id, location_name=location_name, location_id=location_id, address=address, lat=lat, long=long)
     db.session.add(new_favorite)
 
     # Ensure location exists in the locations table
@@ -166,7 +176,8 @@ def get_favorites():
 
     for fav in favorites:
         location = Location.query.filter_by(id=fav.location_id).first()
-        categories = [{"id": cat.id, "name": cat.name, "primary": False} for cat in location.categories] if location else []
+        categories = [{"id": cat.id, "name": cat.name, "primary": False} for cat in
+                      location.categories] if location else []
 
         results.append({
             "id": fav.id,
@@ -174,23 +185,29 @@ def get_favorites():
             "location_id": fav.location_id,
             "address": fav.address,
             "date_added": fav.date_added,
-            "categories": categories
+            "categories": categories,
+            "lat": fav.lat,
+            "long": fav.long
         })
 
-    return jsonify(results)
-
+    return jsonify({"results": results})
 
 
 @app.route("/favorites/<favorite_id>", methods=["DELETE"])
 def remove_favorite(favorite_id):
-    favorite = Favorite.query.filter_by(id=favorite_id).first()
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    favorite = Favorite.query.filter_by(id=favorite_id, user_id=user_id).first()
     if not favorite:
         return jsonify({"error": "Favorite not found"}), 404
 
     db.session.delete(favorite)
     db.session.commit()
 
-    return jsonify({"message": "Favorite removed"}), 200
+    return jsonify({"message": "Favorite removed successfully"}), 200
+
 
 
 @app.route("/planned", methods=["POST"])
@@ -201,6 +218,8 @@ def add_planned():
     location_id = data.get("location_id")
     address = data.get("address")
     categories = data.get("categories", [])
+    lat = data.get("lat")
+    long = data.get("long")
 
     if not user_id or not location_name or not location_id or not address:
         return jsonify({"error": "Missing required fields"}), 400
@@ -211,7 +230,7 @@ def add_planned():
         return jsonify({"error": "Location is already in planned"}), 409
 
     # Create planned entry
-    new_planned = Planned(user_id=user_id, location_name=location_name, location_id=location_id, address=address)
+    new_planned = Planned(user_id=user_id, location_name=location_name, location_id=location_id, address=address, lat=lat, long=long)
     db.session.add(new_planned)
 
     # Ensure location exists in the locations table
@@ -252,7 +271,8 @@ def get_planned():
 
     for planned in planned_locations:
         location = Location.query.filter_by(id=planned.location_id).first()
-        categories = [{"id": cat.id, "name": cat.name, "primary": False} for cat in location.categories] if location else []
+        categories = [{"id": cat.id, "name": cat.name, "primary": False} for cat in
+                      location.categories] if location else []
 
         results.append({
             "id": planned.id,
@@ -260,23 +280,29 @@ def get_planned():
             "location_id": planned.location_id,
             "address": planned.address,
             "date_added": planned.date_added,
-            "categories": categories
+            "categories": categories,
+            "lat": planned.lat,
+            "long": planned.long,
         })
 
-    return jsonify(results)
-
+    return jsonify({"results": results})
 
 
 @app.route("/planned/<planned_id>", methods=["DELETE"])
 def remove_planned(planned_id):
-    planned = Planned.query.filter_by(id=planned_id).first()
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    planned = Planned.query.filter_by(id=planned_id, user_id=user_id).first()
     if not planned:
         return jsonify({"error": "Planned location not found"}), 404
 
     db.session.delete(planned)
     db.session.commit()
 
-    return jsonify({"message": "Planned location removed"}), 200
+    return jsonify({"message": "Planned location removed successfully"}), 200
+
 
 
 if __name__ == '__main__':

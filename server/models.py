@@ -24,6 +24,8 @@ class Favorite(db.Model):
     location_id = db.Column(db.String(255), nullable=False)
     address = db.Column(db.String(255), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    lat = db.Column(db.Float, nullable=False)
+    long = db.Column(db.Float, nullable=False)
 
     user = db.relationship("User", backref="favorites")
 
@@ -36,6 +38,8 @@ class Planned(db.Model):
     location_id = db.Column(db.String(255), nullable=False)
     address = db.Column(db.String(255), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    lat = db.Column(db.Float, nullable=False)
+    long = db.Column(db.Float, nullable=False)
 
     user = db.relationship("User", backref="planned")
 
