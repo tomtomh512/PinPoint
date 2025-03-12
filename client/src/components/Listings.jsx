@@ -33,7 +33,6 @@ export default function FPListings(props) {
 
         try {
             await httpClient.post("http://localhost:5000/favorites", {
-                user_id: user.id,
                 location_name: listing.name,
                 location_id: listing.location_id,
                 address: listing.address,
@@ -57,7 +56,6 @@ export default function FPListings(props) {
 
         try {
             await httpClient.post("http://localhost:5000/planned", {
-                user_id: user.id,
                 location_name: listing.name,
                 location_id: listing.location_id,
                 address: listing.address,
@@ -88,6 +86,7 @@ export default function FPListings(props) {
             } else {
                 alert("Error removing from favorites.");
             }
+
         } catch (error) {
             console.error("Error removing from favorites:", error);
             alert("Something went wrong while removing from favorites.");
@@ -109,6 +108,7 @@ export default function FPListings(props) {
             } else {
                 alert("Error removing from planned.");
             }
+
         } catch (error) {
             console.error("Error removing from planned:", error);
             alert("Something went wrong while removing from planned.");

@@ -117,8 +117,12 @@ def logout_user():
 
 @app.route("/favorites", methods=["POST"])
 def add_favorite():
+    user_id = session.get("user_id")  # Get user_id from session
+
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
     data = request.json
-    user_id = data.get("user_id")
     location_name = data.get("location_name")
     location_id = data.get("location_id")
     address = data.get("address")
@@ -212,8 +216,12 @@ def remove_favorite(favorite_id):
 
 @app.route("/planned", methods=["POST"])
 def add_planned():
+    user_id = session.get("user_id")  # Get user_id from session
+
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
     data = request.json
-    user_id = data.get("user_id")
     location_name = data.get("location_name")
     location_id = data.get("location_id")
     address = data.get("address")
