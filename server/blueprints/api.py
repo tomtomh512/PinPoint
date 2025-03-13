@@ -1,10 +1,32 @@
+from flask import Blueprint, request, jsonify
 import os
 import requests
 
 # Load API Key from .env file
 from dotenv import load_dotenv
+
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
+
+api_bp = Blueprint("api", __name__)
+
+
+@api_bp.route('/searchQuery', methods=['GET'])
+def search():
+    query = request.args.get('query')
+    lat = request.args.get('lat')
+    long = request.args.get('long')
+
+    searchResults = searchQuery(query, lat, long, 50)
+    return jsonify({"results": searchResults})
+
+
+@api_bp.route('/searchID', methods=['GET'])
+def searchbyID():
+    id = request.args.get('id')
+
+    searchResult = searchID(id)
+    return jsonify({"result": searchResult})
 
 
 def searchQuery(querySearch, lat, long, limit):
