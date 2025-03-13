@@ -12,7 +12,12 @@ export default function Planned(props) {
     } = props;
 
     const [searchPlannedResults, setSearchPlannedResults] = useState([]);
+    // Feedback message
     const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        setCurrentMarkers(searchPlannedResults);
+    }, [searchPlannedResults, setCurrentMarkers]);
 
     useEffect(() => {
         const fetchPlanned = async () => {

@@ -138,7 +138,8 @@ def add_favorite():
         return jsonify({"error": f"{location_name} is already in favorites"}), 409
 
     # Create favorite entry
-    new_favorite = Favorite(user_id=user_id, location_name=location_name, location_id=location_id, address=address, lat=lat, long=long)
+    new_favorite = Favorite(user_id=user_id, location_name=location_name, location_id=location_id, address=address,
+                            lat=lat, long=long)
     db.session.add(new_favorite)
 
     # Ensure location exists in the locations table
@@ -213,7 +214,6 @@ def remove_favorite(favorite_id):
     return jsonify({"message": "Favorite removed successfully"}), 200
 
 
-
 @app.route("/planned", methods=["POST"])
 def add_planned():
     user_id = session.get("user_id")
@@ -237,7 +237,8 @@ def add_planned():
         return jsonify({"error": f"{location_name} is already in planned"}), 409
 
     # Create planned entry
-    new_planned = Planned(user_id=user_id, location_name=location_name, location_id=location_id, address=address, lat=lat, long=long)
+    new_planned = Planned(user_id=user_id, location_name=location_name, location_id=location_id, address=address,
+                          lat=lat, long=long)
     db.session.add(new_planned)
 
     # Ensure location exists in the locations table
@@ -311,6 +312,27 @@ def remove_planned(planned_id):
 
     return jsonify({"message": "Planned location removed successfully"}), 200
 
+
+@app.route("/favorites/categories", methods=["GET"])
+def get_favorite_categories():
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    # Get all favorite locations for the user
+    favorites = Favorite.query.filter_by(user_id=user_id).all()
+    category_set = set()
+
+    # Collect unique categories from favorite locations
+    for fav in favorites:
+        location = Location.query.filter_by(id=fav.location_id).first()
+        if location:
+            for category in location.categories:
+                category_set.add((category.id, category.name))
+
+    categories = [{"id": cat_id, "name": cat_name} for cat_id, cat_name in category_set]
+
+    return jsonify({"categories": categories})
 
 
 if __name__ == '__main__':

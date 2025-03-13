@@ -12,7 +12,12 @@ export default function Favorites(props) {
     } = props;
 
     const [searchFavoritesResults, setSearchFavoritesResults] = useState([]);
+    // Feedback message
     const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        setCurrentMarkers(searchFavoritesResults);
+    }, [searchFavoritesResults, setCurrentMarkers]);
 
     useEffect(() => {
         const fetchFavorites = async () => {
