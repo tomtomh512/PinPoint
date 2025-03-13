@@ -13,6 +13,7 @@ import "./style.css";
 
 export default function App() {
 
+    // Keep track of page inputs
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [searchFavorites, setSearchFavorites] = useState("");
@@ -56,6 +57,7 @@ export default function App() {
         "username": null
     })
 
+    // Verify user
     useEffect(() => {
         const verifyUser = async () => {
             try {

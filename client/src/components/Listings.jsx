@@ -12,11 +12,13 @@ export default function Listings(props) {
     } = props;
 
     const handleClick = async (listing) => {
+        // If click search listing, get info from listing itself
         if (mode === "search") {
             setSelectedLocation(listing);
             return;
         }
 
+        // If click favorite or planned listing, get info from search by id api call
         try {
             const response = await httpClient.get("http://localhost:5000/searchID", {
                 params: {
@@ -85,7 +87,6 @@ export default function Listings(props) {
 
         try {
             await httpClient.delete(`http://localhost:5000/favorites/${listing.id}`);
-
             setListings((prevListings) => prevListings.filter(item => item.id !== listing.id));
             setMessage(listing.name + " removed from Favorites");
 
@@ -103,7 +104,6 @@ export default function Listings(props) {
 
         try {
             await httpClient.delete(`http://localhost:5000/planned/${listing.id}`);
-
             setListings((prevListings) => prevListings.filter(item => item.id !== listing.id));
             setMessage(listing.name + " removed from Planned");
 

@@ -15,8 +15,10 @@ export default function Search(props) {
         searchResults, setSearchResults
     } = props;
 
+    // Feedback message
     const [message, setMessage] = useState("");
 
+    // Onload search page load markers
     useEffect(() => {
         setCurrentMarkers(searchResults);
     }, [searchResults]);

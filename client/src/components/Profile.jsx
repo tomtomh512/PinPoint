@@ -6,16 +6,19 @@ import "../styles/Profile.css";
 export default function Profile(props) {
     const { user, setUser, setCurrentMarkers } = props;
 
+    // Clear markers when user is on profile page
     useEffect(() => {
         setCurrentMarkers([])
     }, []);
 
+    // Log out user
     const logoutUser = async () => {
         await httpClient.post("http://localhost:5000/logout");
 
         window.location.reload();
     };
 
+    // Verify user
     useEffect(() => {
         (async() => {
             try {
