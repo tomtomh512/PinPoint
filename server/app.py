@@ -117,8 +117,7 @@ def logout_user():
 
 @app.route("/favorites", methods=["POST"])
 def add_favorite():
-    user_id = session.get("user_id")  # Get user_id from session
-
+    user_id = session.get("user_id")
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
@@ -136,7 +135,7 @@ def add_favorite():
     # Check if the location is already in favorites
     existing_favorite = Favorite.query.filter_by(user_id=user_id, location_id=location_id).first()
     if existing_favorite:
-        return jsonify({"error": "Location is already in favorites"}), 409
+        return jsonify({"error": f"{location_name} is already in favorites"}), 409
 
     # Create favorite entry
     new_favorite = Favorite(user_id=user_id, location_name=location_name, location_id=location_id, address=address, lat=lat, long=long)
@@ -216,8 +215,7 @@ def remove_favorite(favorite_id):
 
 @app.route("/planned", methods=["POST"])
 def add_planned():
-    user_id = session.get("user_id")  # Get user_id from session
-
+    user_id = session.get("user_id")
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
@@ -235,7 +233,7 @@ def add_planned():
     # Check if the location is already in planned locations
     existing_planned = Planned.query.filter_by(user_id=user_id, location_id=location_id).first()
     if existing_planned:
-        return jsonify({"error": "Location is already in planned"}), 409
+        return jsonify({"error": f"{location_name} is already in planned"}), 409
 
     # Create planned entry
     new_planned = Planned(user_id=user_id, location_name=location_name, location_id=location_id, address=address, lat=lat, long=long)
@@ -284,7 +282,7 @@ def get_planned():
 
         results.append({
             "id": planned.id,
-            "location_name": planned.location_name,
+            "name": planned.location_name,
             "location_id": planned.location_id,
             "address": planned.address,
             "date_added": planned.date_added,

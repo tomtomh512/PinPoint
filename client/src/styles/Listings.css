@@ -10,7 +10,7 @@
     display: none;  /* Chrome, Safari, and Opera */
 }
 
-.listings-container > div {
+.listing-card {
     margin: 10px 5px;
     padding: 10px;
     border: 1px solid lightgray;
@@ -20,20 +20,20 @@
     transition: 0.25s;
 }
 
-.listings-container > div:hover {
+.listing-card:hover {
     background-color: lightgray;
 }
 
-.listings-container > div > h3 {
+.listing-card > h3 {
     margin: 5px auto;
     font-size: 1.5rem;
 }
 
-.listing-list > h3 {
+.listing-name {
     margin: 0;
 }
 
-.listing-list > ul {
+.listing-info > ul {
     margin: 5px auto;
 }
 
@@ -60,12 +60,7 @@
     cursor: pointer;
 }
 
-.favorite-button:hover {
-    background-color: #fa5050;
-    border: 1px solid #fa5050;
-}
-
-.planned-button:hover {
-    background-color: #188038;
-    border: 1px solid #188038;
+.list-button:hover {
+    background-color: #278bed;
+    border: 1px solid #278bed;
 }

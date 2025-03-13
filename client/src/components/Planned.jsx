@@ -15,6 +15,11 @@ export default function Planned(props) {
 
     const [searchPlanned, setSearchPlanned] = useState("");
     const [searchPlannedResults, setSearchPlannedResults] = useState([]);
+    const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        setCurrentMarkers(searchPlannedResults);
+    }, [searchPlannedResults]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -33,26 +38,26 @@ export default function Planned(props) {
             if (user.id && user.username) {
                 try {
                     const response = await httpClient.get("http://localhost:5000/planned");
-                    if (response.status === 200) {
-                        setCurrentMarkers(response.data.results);
-                        setSearchPlannedResults(response.data.results);
-                    } else {
-                        console.error("Error fetching planned locations:", response.data);
-                        alert("Error fetching planned locations.");
-                    }
+
+                    setCurrentMarkers(response.data.results);
+                    setSearchPlannedResults(response.data.results);
+
                 } catch (error) {
                     console.error("Error fetching planned locations:", error);
-                    alert("Something went wrong. Please try again later.");
                 }
             }
         };
 
         fetchPlanned();
-    }, [user]);
+    }, []);
 
     useEffect(() => {
-        setCurrentMarkers(searchPlannedResults);
-    }, [searchPlannedResults]);
+        const timer = setTimeout(() => {
+            setMessage(""); // Clear the message after 2 seconds
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, [message]);
 
     return (
         <div className="planned-container main-content-element">
@@ -84,6 +89,7 @@ export default function Planned(props) {
                         :
                         <>
                             <span> {searchPlannedResults.length} {searchPlannedResults.length === 1 ? "result" : "results"} </span>
+                            {message !== "" ? <p className="feedback-message"> {message} </p> : ""}
                             <Listings
                                 user={user}
                                 mode="planned"
@@ -91,6 +97,7 @@ export default function Planned(props) {
                                 setListings={setSearchPlannedResults}
                                 selectedLocation={selectedLocation}
                                 setSelectedLocation={setSelectedLocation}
+                                setMessage={setMessage}
                             />
                         </>
                     }

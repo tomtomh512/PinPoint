@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import httpClient from "../httpClient";
 import "../styles/Login-Registration.css";
@@ -51,7 +51,7 @@ export default function Login() {
 
             </form>
 
-            <button onClick={logInUser} className="login-register-button"> Login</button>
+            <button onClick={logInUser} className="login-logout-button"> Login</button>
 
             <br/>
             {alertMessage}

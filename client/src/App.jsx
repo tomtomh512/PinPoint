@@ -55,6 +55,7 @@ export default function App() {
             try {
                 const response = await httpClient.get("http://localhost:5000/verify");
                 setUser(response.data);
+
             } catch (error) {
                 console.error("Authentication failed:", error.message);
                 setUser({ id: null, email: null });

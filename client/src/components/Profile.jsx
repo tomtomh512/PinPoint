@@ -16,8 +16,8 @@ export default function Profile(props) {
         (async() => {
             try {
                 const response = await httpClient.get("http://localhost:5000/verify");
-
                 setUser(response.data)
+
             } catch (error) {
                 console.log("Not authenticated");
                 setUser({ id: null, email: null }); // Explicitly reset user on failure
@@ -33,10 +33,10 @@ export default function Profile(props) {
                 <>
                     <h2> Welcome, {user.username} </h2>
 
-                    <section className="view-lists">
-                        <Link to="/favorites" className="view-lists-favorites"> View Favorites </Link>
-                        <Link to="/planned" className="view-lists-planned"> View Planned </Link>
-                    </section>
+                    {/*<section className="view-lists">*/}
+                    {/*    <Link to="/favorites" className="view-lists-favorites"> View Favorites </Link>*/}
+                    {/*    <Link to="/planned" className="view-lists-planned"> View Planned </Link>*/}
+                    {/*</section>*/}
 
                     <button onClick={logoutUser} className="login-logout-button"> Log Out</button>
                 </>

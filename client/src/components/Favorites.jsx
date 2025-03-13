@@ -15,6 +15,11 @@ export default function Favorites(props) {
 
     const [searchFavorites, setSearchFavorites] = useState("");
     const [searchFavoritesResults, setSearchFavoritesResults] = useState([]);
+    const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        setCurrentMarkers(searchFavoritesResults);
+    }, [searchFavoritesResults]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -33,26 +38,26 @@ export default function Favorites(props) {
             if (user.id && user.username) {
                 try {
                     const response = await httpClient.get("http://localhost:5000/favorites");
-                    if (response.status === 200) {
-                        setCurrentMarkers(response.data.results);
-                        setSearchFavoritesResults(response.data.results);
-                    } else {
-                        console.error("Error fetching favorites:", response.data);
-                        alert("Error fetching favorites.");
-                    }
+
+                    setCurrentMarkers(response.data.results);
+                    setSearchFavoritesResults(response.data.results);
+
                 } catch (error) {
                     console.error("Error fetching favorites:", error);
-                    alert("Something went wrong. Please try again later.");
                 }
             }
         };
 
         fetchFavorites();
-    }, [user]);
+    }, []);
 
     useEffect(() => {
-        setCurrentMarkers(searchFavoritesResults);
-    }, [searchFavoritesResults]);
+        const timer = setTimeout(() => {
+            setMessage(""); // Clear the message after 2 seconds
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, [message]);
 
     return (
         <div className="favorites-container main-content-element">
@@ -84,6 +89,7 @@ export default function Favorites(props) {
                         :
                         <>
                             <span> {searchFavoritesResults.length} {searchFavoritesResults.length === 1 ? "result" : "results"} </span>
+                            {message !== "" ? <p className="feedback-message"> {message} </p> : ""}
                             <Listings
                                 user={user}
                                 mode="favorite"
@@ -91,6 +97,7 @@ export default function Favorites(props) {
                                 setListings={setSearchFavoritesResults}
                                 selectedLocation={selectedLocation}
                                 setSelectedLocation={setSelectedLocation}
+                                setMessage={setMessage}
                             />
                         </>
                     }

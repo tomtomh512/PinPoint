@@ -62,12 +62,14 @@ export default function Register() {
                 />
 
             </form>
-            <button onClick={registerUser} className="login-register-button">Register</button>
+            <button onClick={registerUser} className="login-logout-button">Register</button>
 
             <br/>
+
             {alertMessage}
 
             <Link to="/profile" className="login-register-back-link"> Back </Link>
+
         </div>
     );
 }

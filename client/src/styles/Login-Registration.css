@@ -19,7 +19,6 @@
     display: block;
     text-align: left;
     margin-left: 10px;
-    margin-top: 10px;
 }
 
 .login-register-container > form > input {
@@ -29,26 +28,12 @@
     background-color: white;
     border-radius: 10px;
     border: 2px solid rgba(0, 0, 0, 0.3);
-    margin: 5px;
+    margin: 5px 5px 10px;
     padding: 10px;
     width: 80%;
-}
-
-.login-register-button {
-    all: unset;
-    border-radius: 25px;
-    border: 1px solid black;
-    margin: 15px 5px 5px;
-    padding: 5px 10px;
-    color: white;
-    background-color: black;
     transition: 0.25s;
-    text-align: center;
-    font-size: 1.5rem;
 }
 
-.login-register-button:hover {
-    background-color: #278bed;
-    border: 1px solid #278bed;
-    cursor: pointer;
+.login-register-container > form > input:hover {
+    border: 2px solid black;
 }

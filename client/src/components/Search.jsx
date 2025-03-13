@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "../styles/Search.css";
 import SearchIcon from "../assets/searchIcon.png";
 import ExitIcon from "../assets/exitIcon.png";
@@ -15,6 +15,7 @@ export default function Search(props) {
 
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [message, setMessage] = useState("");
 
     // Calls API, takes coordinates and search query
     const handleSubmit = async (event) => {
@@ -45,6 +46,14 @@ export default function Search(props) {
         }
     }
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setMessage(""); // Clear the message after 2 seconds
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, [message]);
+
     return (
         <div className="search-form-container  main-content-element">
             <h1> Search </h1>
@@ -73,6 +82,7 @@ export default function Search(props) {
                 :
                 <>
                     <span> {searchResults.length} {searchResults.length === 1 ? "result" : "results"} </span>
+                    {message !== "" ? <p className="feedback-message"> {message} </p> : ""}
                     <Listings
                         user={user}
                         mode="search"
@@ -80,6 +90,7 @@ export default function Search(props) {
                         setListings={setSearchResults}
                         selectedLocation={selectedLocation}
                         setSelectedLocation={setSelectedLocation}
+                        setMessage={setMessage}
                     />
                 </>
             }
