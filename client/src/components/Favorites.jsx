@@ -16,6 +16,10 @@ export default function Favorites(props) {
     const [showFilters, setShowFilters] = useState(false);
     const [filtersInUse, setFiltersInUse] = useState([]);
 
+    useEffect(() => {
+        setSelectedLocation({})
+    }, [setSelectedLocation]);
+
     const fetchFavorites = async () => {
         if (user.id && user.username) {
             try {

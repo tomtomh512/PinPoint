@@ -16,6 +16,10 @@ export default function Planned(props) {
     const [showFilters, setShowFilters] = useState(false);
     const [filtersInUse, setFiltersInUse] = useState([]);
 
+    useEffect(() => {
+        setSelectedLocation({})
+    }, [setSelectedLocation]);
+
     const fetchPlanned = async () => {
         if (user.id && user.username) {
             try {

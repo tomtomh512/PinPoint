@@ -15,6 +15,10 @@ export default function Search(props) {
         searchResults, setSearchResults
     } = props;
 
+    useEffect(() => {
+        setSelectedLocation({})
+    }, [setSelectedLocation]);
+
     // Onload search page load markers
     useEffect(() => {
         setCurrentMarkers(searchResults);
