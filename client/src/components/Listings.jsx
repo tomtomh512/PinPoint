@@ -1,19 +1,30 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import "../styles/Listings.css";
 import httpClient from "../httpClient";
 
 export default function Listings(props) {
     const {
         user,
-        mode,
         listings, setListings,
         selectedLocation, setSelectedLocation,
         setMessage
     } = props;
 
+    // Create a ref to store each listing div
+    // const listingRefs = useRef({});
+    //
+    // useEffect(() => {
+    //     if (selectedLocation && listingRefs.current[selectedLocation.location_id]) {
+    //         listingRefs.current[selectedLocation.location_id].scrollIntoView({
+    //             behavior: "smooth",
+    //             block: "center"
+    //         });
+    //     }
+    // }, [selectedLocation]); // Runs whenever selectedLocation changes
+
     const handleClick = async (listing) => {
         // If click search listing, get info from listing itself
-        if (mode === "search") {
+        if (listing.listing_type === "search") {
             setSelectedLocation(listing);
             return;
         }
@@ -119,7 +130,8 @@ export default function Listings(props) {
             {listings.map((listing) => (
                 <div
                     key={listing.location_id + "-listing"}
-                    className="listing-card"
+                    className={`listing-card ${listing.location_id === selectedLocation.location_id ? "selected-listing" : ""}`}
+                    // ref={(el) => (listingRefs.current[listing.location_id] = el)} // Store ref
                 >
                     <div
                         className="clickable"
@@ -199,20 +211,20 @@ export default function Listings(props) {
                     </div>
 
                     <section className="button-container">
-                        {mode === "search" ?
+                        {listing.listing_type === "search" ?
                             <>
                                 <button className="list-button" onClick={() => addFavorite(listing)}> Favorite +</button>
                                 <button className="list-button" onClick={() => addPlanned(listing)}> Planned +</button>
                             </>
                             :
                             <>
-                                {mode === "favorite" ?
+                                {listing.listing_type === "favorite" ?
                                     <button className="list-button" onClick={() => removeFavorite(listing)}> Favorite
                                         -</button>
                                     :
                                     <button className="list-button" onClick={() => addFavorite(listing)}> Favorite +</button>
                                 }
-                                {mode === "planned" ?
+                                {listing.listing_type === "planned" ?
                                     <button className="list-button" onClick={() => removePlanned(listing)}> Planned -</button>
                                     :
                                     <button className="list-button" onClick={() => addPlanned(listing)}> Planned +</button>
@@ -225,6 +237,7 @@ export default function Listings(props) {
             ))}
 
             <br/>
+
         </section>
     );
 }

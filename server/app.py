@@ -190,7 +190,8 @@ def get_favorites():
             "date_added": fav.date_added,
             "categories": categories,
             "lat": fav.lat,
-            "long": fav.long
+            "long": fav.long,
+            "listing_type": "favorite"
         })
 
     return jsonify({"results": results})
@@ -289,6 +290,7 @@ def get_planned():
             "categories": categories,
             "lat": planned.lat,
             "long": planned.long,
+            "listing_type": "planned"
         })
 
     return jsonify({"results": results})

@@ -49,7 +49,8 @@ def searchQuery(querySearch, lat, long, limit):
                 "long": long,
                 "categories": categories,
                 "contacts": contacts,
-                "hours": hours
+                "hours": hours,
+                "listing_type": "search"
             })
 
         return results

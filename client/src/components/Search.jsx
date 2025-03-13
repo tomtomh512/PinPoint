@@ -91,7 +91,6 @@ export default function Search(props) {
                     {message !== "" ? <p className="feedback-message"> {message} </p> : ""}
                     <Listings
                         user={user}
-                        mode="search"
                         listings={searchResults}
                         setListings={setSearchResults}
                         selectedLocation={selectedLocation}

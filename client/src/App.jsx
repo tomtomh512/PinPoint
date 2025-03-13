@@ -16,8 +16,6 @@ export default function App() {
     // Keep track of page inputs
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    const [searchFavorites, setSearchFavorites] = useState("");
-    const [searchPlanned, setSearchPlanned] = useState("");
 
     // Current markers on map
     const [currentMarkers, setCurrentMarkers] = useState([]);
@@ -122,8 +120,6 @@ export default function App() {
                             setCurrentMarkers={setCurrentMarkers}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
-                            searchFavorites={searchFavorites}
-                            setSearchFavorites={setSearchFavorites}
                         />
                     } />
 
@@ -133,8 +129,6 @@ export default function App() {
                             setCurrentMarkers={setCurrentMarkers}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
-                            searchPlanned={searchPlanned}
-                            setSearchPlanned={setSearchPlanned}
                         />
                     } />
                 </Routes>

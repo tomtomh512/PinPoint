@@ -3,6 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import "../styles/Map.css";
 import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from 'react-leaflet';
 import { Icon } from 'leaflet';
+import httpClient from "../httpClient";
 
 export default function Map(props) {
     const {
@@ -12,6 +13,28 @@ export default function Map(props) {
         selectedLocation, setSelectedLocation
     } = props;
 
+    const handleClick = async (listing) => {
+        // If click search listing, get info from listing itself
+        if (listing.listing_type === "search") {
+            setSelectedLocation(listing);
+            return;
+        }
+
+        // If click favorite or planned listing, get info from search by id api call
+        try {
+            const response = await httpClient.get("http://localhost:5000/searchID", {
+                params: {
+                    id: listing.location_id
+                },
+            });
+
+            setSelectedLocation(response.data.result);
+
+        } catch (error) {
+            console.error("Error fetching id:", error);
+        }
+    }
+
     const customIcon = new Icon({
         iconUrl: require("../assets/pin-blue.png"),
         iconSize: [38, 38]
@@ -19,7 +42,7 @@ export default function Map(props) {
 
     const customHighlightedIcon = new Icon({
         iconUrl: require("../assets/pin-red.png"),
-        iconSize: [42, 42]
+        iconSize: [38, 38]
     });
 
     function ChangeView({ center }) {
@@ -57,12 +80,12 @@ export default function Map(props) {
                         key={marker.location_id + "-marker"}
                         zIndexOffset={marker.location_id === selectedLocation.location_id ? 1000 : 0} // Set active marker in front of others
                         eventHandlers={{
-                            click: () => setSelectedLocation(marker)
+                            click: () => handleClick(marker)
                         }}
                     >
-                        <Popup>
-                            <h3>{marker.name}</h3>
-                        </Popup>
+                        {/*<Popup>*/}
+                        {/*    <h3>{marker.name}</h3>*/}
+                        {/*</Popup>*/}
                     </Marker>
                 ))}
             </MapContainer>

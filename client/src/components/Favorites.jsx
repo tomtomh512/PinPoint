@@ -11,7 +11,6 @@ export default function Favorites(props) {
         user,
         setCurrentMarkers,
         selectedLocation, setSelectedLocation,
-        searchFavorites, setSearchFavorites
     } = props;
 
     const [searchFavoritesResults, setSearchFavoritesResults] = useState([]);
@@ -60,25 +59,6 @@ export default function Favorites(props) {
             <h1> Favorites </h1>
             {user.id && user.username ?
                 <>
-                    {/*<form onSubmit={handleSubmit} className="search-form">*/}
-                    {/*    <input*/}
-                    {/*        type="text"*/}
-                    {/*        name="search"*/}
-                    {/*        value={searchFavorites}*/}
-                    {/*        placeholder="Search"*/}
-                    {/*        onChange={(e) => {setSearchFavorites(e.target.value)}}*/}
-                    {/*        onKeyDown={handleKeyDown}*/}
-                    {/*    />*/}
-
-                    {/*    <button onClick={() => {setSearchFavorites("")}} >*/}
-                    {/*        <img src={ExitIcon} alt="X"/>*/}
-                    {/*    </button>*/}
-
-                    {/*    <button type="submit">*/}
-                    {/*        <img src={SearchIcon} alt="Search"/>*/}
-                    {/*    </button>*/}
-                    {/*</form>*/}
-
                     {searchFavoritesResults.length === 0 ?
                         // If no results, display message, else show num results and render listings
                         <h3 className="no-results-message"> Nothing to display </h3>
@@ -88,7 +68,6 @@ export default function Favorites(props) {
                             {message !== "" ? <p className="feedback-message"> {message} </p> : ""}
                             <Listings
                                 user={user}
-                                mode="favorite"
                                 listings={searchFavoritesResults}
                                 setListings={setSearchFavoritesResults}
                                 selectedLocation={selectedLocation}

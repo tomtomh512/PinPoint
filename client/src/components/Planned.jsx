@@ -11,7 +11,6 @@ export default function Planned(props) {
         user,
         setCurrentMarkers,
         selectedLocation, setSelectedLocation,
-        searchPlanned, setSearchPlanned
     } = props;
 
     const [searchPlannedResults, setSearchPlannedResults] = useState([]);
@@ -60,25 +59,6 @@ export default function Planned(props) {
             <h1> Planned </h1>
             {user.id && user.username ?
                 <>
-                    {/*<form onSubmit={handleSubmit} className="search-form">*/}
-                    {/*    <input*/}
-                    {/*        type="text"*/}
-                    {/*        name="search"*/}
-                    {/*        value={searchPlanned}*/}
-                    {/*        placeholder="Search"*/}
-                    {/*        onChange={(e) => {setSearchPlanned(e.target.value)}}*/}
-                    {/*        onKeyDown={handleKeyDown}*/}
-                    {/*    />*/}
-
-                    {/*    <button onClick={() => {setSearchPlanned("")}} >*/}
-                    {/*        <img src={ExitIcon} alt="X"/>*/}
-                    {/*    </button>*/}
-
-                    {/*    <button type="submit">*/}
-                    {/*        <img src={SearchIcon} alt="Search"/>*/}
-                    {/*    </button>*/}
-                    {/*</form>*/}
-
                     {searchPlannedResults.length === 0 ?
                         // If no results, display message, else show num results and render listings
                         <h3 className="no-results-message"> Nothing to display </h3>
@@ -88,7 +68,6 @@ export default function Planned(props) {
                             {message !== "" ? <p className="feedback-message"> {message} </p> : ""}
                             <Listings
                                 user={user}
-                                mode="planned"
                                 listings={searchPlannedResults}
                                 setListings={setSearchPlannedResults}
                                 selectedLocation={selectedLocation}
