@@ -25,8 +25,7 @@ A map application for exploring and saving locations
 
 Backend Setup (Server Directory)
 
-<pre><code>
-cd server
+<pre><code>cd server
 python -m venv venv
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 pip install -r requirements.txt
@@ -35,8 +34,7 @@ flask run
 
 Frontend Setup (Client Directory)
 
-<pre><code>
-cd client
+<pre><code>cd client
 npm install
 npm start
 </code></pre>
