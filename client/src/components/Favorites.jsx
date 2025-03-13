@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from "react";
-import ExitIcon from "../assets/exitIcon.png";
-import SearchIcon from "../assets/searchIcon.png";
 import Listings from "./Listings";
 import "../styles/Planned-Favorites.css";
 import {Link} from "react-router-dom";
@@ -15,18 +13,6 @@ export default function Favorites(props) {
 
     const [searchFavoritesResults, setSearchFavoritesResults] = useState([]);
     const [message, setMessage] = useState("");
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-    };
-
-    // Lets 'Enter' act as submit button
-    function handleKeyDown(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            handleSubmit(event);
-        }
-    }
 
     useEffect(() => {
         const fetchFavorites = async () => {

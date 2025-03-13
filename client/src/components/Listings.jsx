@@ -11,16 +11,16 @@ export default function Listings(props) {
     } = props;
 
     // Create a ref to store each listing div
-    // const listingRefs = useRef({});
-    //
-    // useEffect(() => {
-    //     if (selectedLocation && listingRefs.current[selectedLocation.location_id]) {
-    //         listingRefs.current[selectedLocation.location_id].scrollIntoView({
-    //             behavior: "smooth",
-    //             block: "center"
-    //         });
-    //     }
-    // }, [selectedLocation]); // Runs whenever selectedLocation changes
+    const listingRefs = useRef({});
+
+    useEffect(() => {
+        if (selectedLocation && listingRefs.current[selectedLocation.location_id]) {
+            listingRefs.current[selectedLocation.location_id].scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+        }
+    }, [selectedLocation]); // Runs whenever selectedLocation changes
 
     const handleClick = async (listing) => {
         // If click search listing, get info from listing itself
@@ -131,7 +131,7 @@ export default function Listings(props) {
                 <div
                     key={listing.location_id + "-listing"}
                     className={`listing-card ${listing.location_id === selectedLocation.location_id ? "selected-listing" : ""}`}
-                    // ref={(el) => (listingRefs.current[listing.location_id] = el)} // Store ref
+                    ref={(el) => (listingRefs.current[listing.location_id] = el)} // Store ref
                 >
                     <div
                         className="clickable"
