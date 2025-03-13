@@ -21,12 +21,12 @@ export default function Navbar(props) {
                 }
             </span>
 
-            <Link to="/profile" className="navbar-link" onClick={togglePanelTrue}>
-                <img src={ProfileIcon} alt="Profile"/>
-            </Link>
-
             <Link to="/" className="navbar-link" onClick={togglePanelTrue}>
                 <img src={SearchIcon} alt="Search"/>
+            </Link>
+
+            <Link to="/profile" className="navbar-link" onClick={togglePanelTrue}>
+                <img src={ProfileIcon} alt="Profile"/>
             </Link>
 
             <Link to="/favorites" className="navbar-link" onClick={togglePanelTrue}>

@@ -19,9 +19,8 @@ export default function Favorites(props) {
             if (user.id && user.username) {
                 try {
                     const response = await httpClient.get("http://localhost:5000/favorites");
-
-                    setCurrentMarkers(response.data.results);
                     setSearchFavoritesResults(response.data.results);
+                    setCurrentMarkers(response.data.results);
 
                 } catch (error) {
                     console.error("Error fetching favorites:", error);
@@ -30,12 +29,12 @@ export default function Favorites(props) {
         };
 
         fetchFavorites();
-    }, []);
+    }, [setCurrentMarkers, user.id, user.username]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setMessage(""); // Clear the message after 2 seconds
-        }, 3000);
+        }, 2000);
 
         return () => clearTimeout(timer);
     }, [message]);

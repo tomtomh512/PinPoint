@@ -9,7 +9,7 @@ export default function Profile(props) {
     // Clear markers when user is on profile page
     useEffect(() => {
         setCurrentMarkers([])
-    }, []);
+    }, [setCurrentMarkers]);
 
     // Log out user
     const logoutUser = async () => {
@@ -40,10 +40,10 @@ export default function Profile(props) {
                 <>
                     <h2> Welcome, {user.username} </h2>
 
-                    {/*<section className="view-lists">*/}
-                    {/*    <Link to="/favorites" className="view-lists-favorites"> View Favorites </Link>*/}
-                    {/*    <Link to="/planned" className="view-lists-planned"> View Planned </Link>*/}
-                    {/*</section>*/}
+                    <section className="view-lists">
+                        <Link to="/favorites" className="view-lists-button"> View Favorites </Link>
+                        <Link to="/planned" className="view-lists-button"> View Planned </Link>
+                    </section>
 
                     <button onClick={logoutUser} className="login-logout-button"> Log Out</button>
                 </>

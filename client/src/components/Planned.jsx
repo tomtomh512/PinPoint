@@ -20,8 +20,8 @@ export default function Planned(props) {
                 try {
                     const response = await httpClient.get("http://localhost:5000/planned");
 
-                    setCurrentMarkers(response.data.results);
                     setSearchPlannedResults(response.data.results);
+                    setCurrentMarkers(response.data.results);
 
                 } catch (error) {
                     console.error("Error fetching planned locations:", error);
@@ -30,12 +30,12 @@ export default function Planned(props) {
         };
 
         fetchPlanned();
-    }, []);
+    }, [setCurrentMarkers, user.id, user.username]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setMessage(""); // Clear the message after 2 seconds
-        }, 3000);
+        }, 2000);
 
         return () => clearTimeout(timer);
     }, [message]);

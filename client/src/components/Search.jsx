@@ -21,7 +21,7 @@ export default function Search(props) {
     // Onload search page load markers
     useEffect(() => {
         setCurrentMarkers(searchResults);
-    }, [searchResults]);
+    }, [searchResults, setCurrentMarkers]);
 
     // Calls API, takes coordinates and search query
     const handleSubmit = async (event) => {
@@ -55,7 +55,7 @@ export default function Search(props) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setMessage(""); // Clear the message after 2 seconds
-        }, 3000);
+        }, 2000);
 
         return () => clearTimeout(timer);
     }, [message]);
