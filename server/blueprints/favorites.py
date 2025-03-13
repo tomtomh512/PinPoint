@@ -64,9 +64,30 @@ def get_favorites():
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
+    # Get filters
+    filters = []
+    for key, value in request.args.items():
+        if key == 'filters[]':
+            filters.append(value)
+
     favorites = Favorites.query.filter_by(user_id=user_id).all()
+
+    # If filters are present, we need to filter the results based on the categories
+    if filters:
+        filtered_favorites = []
+        for fav in favorites:
+            location = Location.query.filter_by(id=fav.location_id).first()
+            if location:
+                # Get the categories for the location
+                categories = {cat.name for cat in location.categories}
+                # Check if any of the filters match the location's categories
+                if any(filter in categories for filter in filters):
+                    filtered_favorites.append(fav)
+        favorites = filtered_favorites  # Use the filtered favorites list
+
     results = []
 
+    # Prepare the results to return
     for fav in favorites:
         location = Location.query.filter_by(id=fav.location_id).first()
         categories = [{"id": cat.id, "name": cat.name, "primary": False} for cat in
@@ -110,12 +131,12 @@ def get_favorite_categories():
         return jsonify({"error": "Unauthorized"}), 401
 
     # Get all favorite locations for the user
-    favorites = Favorites.query.filter_by(user_id=user_id).all()
+    favorite_locations = Favorites.query.filter_by(user_id=user_id).all()
     category_set = set()
 
     # Collect unique categories from favorite locations
-    for fav in favorites:
-        location = Location.query.filter_by(id=fav.location_id).first()
+    for favorite in favorite_locations:
+        location = Location.query.filter_by(id=favorite.location_id).first()
         if location:
             for category in location.categories:
                 category_set.add((category.id, category.name))

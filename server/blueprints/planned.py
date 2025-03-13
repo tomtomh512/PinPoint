@@ -64,23 +64,44 @@ def get_planned():
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
+    # Get filters
+    filters = []
+    for key, value in request.args.items():
+        if key == 'filters[]':
+            filters.append(value)
+
     planned_locations = Planned.query.filter_by(user_id=user_id).all()
+
+    # If filters are present, we need to filter the results based on the categories
+    if filters:
+        filtered_planned = []
+        for plan in planned_locations:
+            location = Location.query.filter_by(id=plan.location_id).first()
+            if location:
+                # Get the categories for the location
+                categories = {cat.name for cat in location.categories}
+                # Check if any of the filters match the location's categories
+                if any(filter in categories for filter in filters):
+                    filtered_planned.append(plan)
+        planned_locations = filtered_planned  # Use the filtered planned list
+
     results = []
 
-    for planned in planned_locations:
-        location = Location.query.filter_by(id=planned.location_id).first()
+    # Prepare the results to return
+    for plan in planned_locations:
+        location = Location.query.filter_by(id=plan.location_id).first()
         categories = [{"id": cat.id, "name": cat.name, "primary": False} for cat in
                       location.categories] if location else []
 
         results.append({
-            "id": planned.id,
-            "name": planned.location_name,
-            "location_id": planned.location_id,
-            "address": planned.address,
-            "date_added": planned.date_added,
+            "id": plan.id,
+            "name": plan.location_name,
+            "location_id": plan.location_id,
+            "address": plan.address,
+            "date_added": plan.date_added,
             "categories": categories,
-            "lat": planned.lat,
-            "long": planned.long,
+            "lat": plan.lat,
+            "long": plan.long,
             "listing_type": "planned"
         })
 
@@ -101,3 +122,26 @@ def remove_planned(planned_id):
     db.session.commit()
 
     return jsonify({"message": "Planned location removed successfully"}), 200
+
+
+@planned_bp.route("/planned/categories", methods=["GET"])
+def get_planned_categories():
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    # Get all planned locations for the user
+    planned_locations = Planned.query.filter_by(user_id=user_id).all()
+    category_set = set()
+
+    # Collect unique categories from planned locations
+    for planned in planned_locations:
+        location = Location.query.filter_by(id=planned.location_id).first()
+        if location:
+            for category in location.categories:
+                category_set.add((category.id, category.name))
+
+    categories = [{"id": cat_id, "name": cat_name} for cat_id, cat_name in category_set]
+
+    return jsonify({"categories": categories})
+

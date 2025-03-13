@@ -12,29 +12,52 @@ export default function Favorites(props) {
     } = props;
 
     const [searchFavoritesResults, setSearchFavoritesResults] = useState([]);
-    // Feedback message
-    const [message, setMessage] = useState("");
+    const [filters, setFilters] = useState([]);
+    const [showFilters, setShowFilters] = useState(false);
+    const [filtersInUse, setFiltersInUse] = useState([]);
+
+    const fetchFavorites = async () => {
+        if (user.id && user.username) {
+            try {
+                const response = await httpClient.get("http://localhost:5000/favorites", {
+                    params: {
+                        filters: filtersInUse
+                    }
+                });
+                setSearchFavoritesResults(response.data.results);
+                setCurrentMarkers(response.data.results);
+
+            } catch (error) {
+                console.error("Error fetching favorites:", error);
+            }
+        }
+    };
+
+    const fetchCategories = async () => {
+        if (user.id && user.username) {
+            try {
+                const response = await httpClient.get("http://localhost:5000/favorites/categories");
+                setFilters(response.data.categories);
+
+            } catch (error) {
+                console.error("Error fetching favorites categories:", error);
+            }
+        }
+    };
 
     useEffect(() => {
         setCurrentMarkers(searchFavoritesResults);
+
     }, [searchFavoritesResults, setCurrentMarkers]);
 
     useEffect(() => {
-        const fetchFavorites = async () => {
-            if (user.id && user.username) {
-                try {
-                    const response = await httpClient.get("http://localhost:5000/favorites");
-                    setSearchFavoritesResults(response.data.results);
-                    setCurrentMarkers(response.data.results);
-
-                } catch (error) {
-                    console.error("Error fetching favorites:", error);
-                }
-            }
-        };
-
         fetchFavorites();
-    }, [setCurrentMarkers, user.id, user.username]);
+        fetchCategories();
+
+    }, [setCurrentMarkers, filtersInUse, user.id, user.username]);
+
+    // Feedback message
+    const [message, setMessage] = useState("");
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -43,6 +66,19 @@ export default function Favorites(props) {
 
         return () => clearTimeout(timer);
     }, [message]);
+
+    const handleFilterChange = (event) => {
+        const filterName = event.target.name;
+        const isChecked = event.target.checked;
+
+        setFiltersInUse((prevFiltersInUse) => {
+            if (isChecked) {
+                return [...prevFiltersInUse, filterName]; // Add the filter to the array
+            } else {
+                return prevFiltersInUse.filter((filter) => filter !== filterName); // Remove the filter from the array
+            }
+        });
+    };
 
     return (
         <div className="favorites-container main-content-element">
@@ -54,8 +90,34 @@ export default function Favorites(props) {
                         <h3 className="no-results-message"> Nothing to display </h3>
                         :
                         <>
-                            <span> {searchFavoritesResults.length} {searchFavoritesResults.length === 1 ? "result" : "results"} </span>
+                            {!showFilters ?
+                                <span className="filter-toggle" onClick={() => setShowFilters(!showFilters)}>
+                                    Show Filters
+                                </span>
+                                :
+                                <>
+                                    <span className="filter-toggle" onClick={() => setShowFilters(!showFilters)}>
+                                        Hide Filters
+                                    </span>
+
+                                    <form className="filter-form">
+                                        {filters.map((filter) => (
+                                            <div className="filter-box" key={filter.id}>
+                                                <input
+                                                    type="checkbox"
+                                                    name={filter.name}
+                                                    onChange={handleFilterChange}
+                                                    checked={filtersInUse.includes(filter.name)}
+                                                />
+                                                <label>{filter.name}</label>
+                                            </div>
+                                        ))}
+                                    </form>
+                                </>
+                            }
+
                             {message !== "" ? <p className="feedback-message"> {message} </p> : ""}
+
                             <Listings
                                 user={user}
                                 listings={searchFavoritesResults}
