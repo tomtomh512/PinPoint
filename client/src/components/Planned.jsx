@@ -11,15 +11,11 @@ export default function Planned(props) {
         user,
         setCurrentMarkers,
         selectedLocation, setSelectedLocation,
+        searchPlanned, setSearchPlanned
     } = props;
 
-    const [searchPlanned, setSearchPlanned] = useState("");
     const [searchPlannedResults, setSearchPlannedResults] = useState([]);
     const [message, setMessage] = useState("");
-
-    useEffect(() => {
-        setCurrentMarkers(searchPlannedResults);
-    }, [searchPlannedResults]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -54,7 +50,7 @@ export default function Planned(props) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setMessage(""); // Clear the message after 2 seconds
-        }, 2000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [message]);

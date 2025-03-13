@@ -12,6 +12,12 @@ import httpClient from "./httpClient";
 import "./style.css";
 
 export default function App() {
+
+    const [searchInput, setSearchInput] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [searchFavorites, setSearchFavorites] = useState("");
+    const [searchPlanned, setSearchPlanned] = useState("");
+
     // Current markers on map
     const [currentMarkers, setCurrentMarkers] = useState([]);
     // Selected location, for expanding location card and highlighting marker
@@ -90,10 +96,20 @@ export default function App() {
                             userLocation={userLocation}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
+                            searchInput={searchInput}
+                            setSearchInput={setSearchInput}
+                            searchResults={searchResults}
+                            setSearchResults={setSearchResults}
                         />
                     } />
 
-                    <Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
+                    <Route path="/profile" element={
+                        <Profile
+                            user={user}
+                            setUser={setUser}
+                            setCurrentMarkers={setCurrentMarkers}
+                        />
+                    } />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
 
@@ -103,6 +119,8 @@ export default function App() {
                             setCurrentMarkers={setCurrentMarkers}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
+                            searchFavorites={searchFavorites}
+                            setSearchFavorites={setSearchFavorites}
                         />
                     } />
 
@@ -112,6 +130,8 @@ export default function App() {
                             setCurrentMarkers={setCurrentMarkers}
                             selectedLocation={selectedLocation}
                             setSelectedLocation={setSelectedLocation}
+                            searchPlanned={searchPlanned}
+                            setSearchPlanned={setSearchPlanned}
                         />
                     } />
                 </Routes>

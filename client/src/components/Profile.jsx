@@ -4,7 +4,11 @@ import httpClient from "../httpClient";
 import "../styles/Profile.css";
 
 export default function Profile(props) {
-    const { user, setUser } = props;
+    const { user, setUser, setCurrentMarkers } = props;
+
+    useEffect(() => {
+        setCurrentMarkers([])
+    }, []);
 
     const logoutUser = async () => {
         await httpClient.post("http://localhost:5000/logout");

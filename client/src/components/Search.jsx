@@ -11,11 +11,15 @@ export default function Search(props) {
         setCurrentMarkers,
         userLocation,
         selectedLocation, setSelectedLocation,
+        searchInput, setSearchInput,
+        searchResults, setSearchResults
     } = props;
 
-    const [searchInput, setSearchInput] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
     const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        setCurrentMarkers(searchResults);
+    }, [searchResults]);
 
     // Calls API, takes coordinates and search query
     const handleSubmit = async (event) => {
@@ -49,7 +53,7 @@ export default function Search(props) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setMessage(""); // Clear the message after 2 seconds
-        }, 2000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [message]);

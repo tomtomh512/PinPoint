@@ -11,15 +11,11 @@ export default function Favorites(props) {
         user,
         setCurrentMarkers,
         selectedLocation, setSelectedLocation,
+        searchFavorites, setSearchFavorites
     } = props;
 
-    const [searchFavorites, setSearchFavorites] = useState("");
     const [searchFavoritesResults, setSearchFavoritesResults] = useState([]);
     const [message, setMessage] = useState("");
-
-    useEffect(() => {
-        setCurrentMarkers(searchFavoritesResults);
-    }, [searchFavoritesResults]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -54,7 +50,7 @@ export default function Favorites(props) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setMessage(""); // Clear the message after 2 seconds
-        }, 2000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [message]);

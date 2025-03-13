@@ -141,8 +141,6 @@ export default function Listings(props) {
                             ))}
                         </section>
 
-                        <br/>
-
                         {/* If the current listing is the selected listing to be expanded */}
                         {listing.location_id === selectedLocation.location_id ?
                             <>
@@ -171,8 +169,6 @@ export default function Listings(props) {
                                         </ul>
                                     ))}
                                 </section>
-
-                                <br/>
 
                                 {/* This code block displays hours */}
                                 {selectedLocation.hours[0] && selectedLocation.hours[0].text ?
