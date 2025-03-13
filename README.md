@@ -1,6 +1,6 @@
 <h1> PinPoint </h1>
 
-A Map Application for exploring and saving locations
+A map application for exploring and saving locations
 
 <img src="/assets/demo.png">
 
