@@ -1,13 +1,7 @@
 .listings-container {
     overflow-y: scroll;
-    height: 100vh;
-    scrollbar-width: none;  /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    height: 100%;
     word-break: break-word;
-}
-
-.listings-container::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari, and Opera */
 }
 
 .listing-card {

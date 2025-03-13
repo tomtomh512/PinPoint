@@ -10,10 +10,13 @@ export default function Map(props) {
         markers,
         userLocation,
         onViewChange,
-        selectedLocation, setSelectedLocation
+        selectedLocation, setSelectedLocation,
+        togglePanelTrue
     } = props;
 
     const handleClick = async (listing) => {
+        togglePanelTrue();
+
         // If click search listing, get info from listing itself
         if (listing.listing_type === "search") {
             setSelectedLocation(listing);
