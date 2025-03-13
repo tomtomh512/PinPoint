@@ -60,24 +60,24 @@ export default function Favorites(props) {
             <h1> Favorites </h1>
             {user.id && user.username ?
                 <>
-                    <form onSubmit={handleSubmit} className="search-form">
-                        <input
-                            type="text"
-                            name="search"
-                            value={searchFavorites}
-                            placeholder="Search"
-                            onChange={(e) => {setSearchFavorites(e.target.value)}}
-                            onKeyDown={handleKeyDown}
-                        />
+                    {/*<form onSubmit={handleSubmit} className="search-form">*/}
+                    {/*    <input*/}
+                    {/*        type="text"*/}
+                    {/*        name="search"*/}
+                    {/*        value={searchFavorites}*/}
+                    {/*        placeholder="Search"*/}
+                    {/*        onChange={(e) => {setSearchFavorites(e.target.value)}}*/}
+                    {/*        onKeyDown={handleKeyDown}*/}
+                    {/*    />*/}
 
-                        <button onClick={() => {setSearchFavorites("")}} >
-                            <img src={ExitIcon} alt="X"/>
-                        </button>
+                    {/*    <button onClick={() => {setSearchFavorites("")}} >*/}
+                    {/*        <img src={ExitIcon} alt="X"/>*/}
+                    {/*    </button>*/}
 
-                        <button type="submit">
-                            <img src={SearchIcon} alt="Search"/>
-                        </button>
-                    </form>
+                    {/*    <button type="submit">*/}
+                    {/*        <img src={SearchIcon} alt="Search"/>*/}
+                    {/*    </button>*/}
+                    {/*</form>*/}
 
                     {searchFavoritesResults.length === 0 ?
                         // If no results, display message, else show num results and render listings

@@ -87,6 +87,7 @@ export default function App() {
                 userLocation={userLocation}
                 onViewChange={setUserLocation}
                 selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
             />
 
             {showPanel &&

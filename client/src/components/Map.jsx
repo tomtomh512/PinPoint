@@ -1,11 +1,16 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import 'leaflet/dist/leaflet.css';
 import "../styles/Map.css";
 import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from 'react-leaflet';
 import { Icon } from 'leaflet';
 
 export default function Map(props) {
-    const { markers, userLocation, onViewChange, selectedLocation } = props;
+    const {
+        markers,
+        userLocation,
+        onViewChange,
+        selectedLocation, setSelectedLocation
+    } = props;
 
     const customIcon = new Icon({
         iconUrl: require("../assets/pin-blue.png"),
@@ -51,6 +56,9 @@ export default function Map(props) {
                         icon={marker.location_id === selectedLocation.location_id ? customHighlightedIcon : customIcon}
                         key={marker.location_id + "-marker"}
                         zIndexOffset={marker.location_id === selectedLocation.location_id ? 1000 : 0} // Set active marker in front of others
+                        eventHandlers={{
+                            click: () => setSelectedLocation(marker)
+                        }}
                     >
                         <Popup>
                             <h3>{marker.name}</h3>
