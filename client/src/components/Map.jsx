@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import 'leaflet/dist/leaflet.css';
 import "../styles/Map.css";
-import { MapContainer, TileLayer, Marker, useMap, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMap, ZoomControl, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import httpClient from "../httpClient";
 
@@ -86,9 +86,9 @@ export default function Map(props) {
                             click: () => handleClick(marker)
                         }}
                     >
-                        {/*<Popup>*/}
-                        {/*    <h3>{marker.name}</h3>*/}
-                        {/*</Popup>*/}
+                        <Popup>
+                            <h3>{marker.name}</h3>
+                        </Popup>
                     </Marker>
                 ))}
             </MapContainer>

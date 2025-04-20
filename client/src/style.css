@@ -61,3 +61,10 @@ body {
     border-radius: 10px;
     text-align: center;
 }
+
+@media only screen and (max-width: 768px) {
+    .main-content-element {
+        width: calc(100vw - 100px);
+        min-width: unset;
+    }
+}
