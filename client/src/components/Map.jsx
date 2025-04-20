@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import 'leaflet/dist/leaflet.css';
 import "../styles/Map.css";
 import { MapContainer, TileLayer, Marker, useMap, ZoomControl, Popup } from 'react-leaflet';
@@ -13,6 +13,8 @@ export default function Map(props) {
         selectedLocation, setSelectedLocation,
         togglePanelTrue
     } = props;
+
+    const markerRefs = useRef({});
 
     const handleClick = async (listing) => {
         togglePanelTrue();
@@ -30,13 +32,18 @@ export default function Map(props) {
                     id: listing.location_id
                 },
             });
-
             setSelectedLocation(response.data.result);
 
         } catch (error) {
             console.error("Error fetching id:", error);
         }
     }
+
+    useEffect(() => {
+        if (selectedLocation?.location_id && markerRefs.current[selectedLocation.location_id]) {
+            markerRefs.current[selectedLocation.location_id].openPopup();
+        }
+    }, [selectedLocation]);
 
     const customIcon = new Icon({
         iconUrl: require("../assets/pin-blue.png"),
@@ -78,6 +85,12 @@ export default function Map(props) {
 
                 {markers.map(marker => (
                     <Marker
+                        ref={(ref) => {
+                            if (ref) {
+                                markerRefs.current[marker.location_id] = ref;
+                            }
+                        }}
+
                         position={[marker.lat, marker.long]}
                         icon={marker.location_id === selectedLocation.location_id ? customHighlightedIcon : customIcon}
                         key={marker.location_id + "-marker"}
